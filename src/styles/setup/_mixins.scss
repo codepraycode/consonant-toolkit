@@ -1,0 +1,9 @@
+/* Functions */
+
+@mixin fontFamily($name: Poppins) {
+    font-family: $name, sans-serif, system-ui,
+        Avenir,
+        Helvetica,
+        Arial,
+        sans-serif;
+}

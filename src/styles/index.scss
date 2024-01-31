@@ -1,0 +1,30 @@
+@import './setup/reset';
+@import './setup/utility';
+
+
+.icon {
+  display: inline-block;
+  width: 2rem !important;
+}
+
+
+.grand_image {
+  width: 10rem;
+  margin-inline: auto;
+
+}
+
+
+.reset {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+
+  &_description {
+    width: 38%;
+    margin-inline: auto;
+  }
+}

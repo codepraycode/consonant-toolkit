@@ -6,8 +6,8 @@ import { resolve } from 'path';
 export default defineConfig({
     plugins: [reactPlugin()],
     resolve: {
-    alias: {
-        '@': resolve(__dirname, 'src'),
+        alias: {
+            '@': resolve(__dirname, 'src'),
         },
     },
 });

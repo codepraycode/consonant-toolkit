@@ -1,49 +1,35 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import { resolveIcon } from './utils/resolveAsset';
-import { useAsync } from "react-async"
+import Image from './components/Image';
+import Button from './components/Button';
 
 
 
-const loadVersion = async () => {
-    const appVersion = await window.api.getAppVersion();
-    const envVersions = window.api.envVersion;
 
-    return {
-        ...envVersions,
-        app: appVersion
-    };
-}
 
 
 const App = () => {
 
 
-    const {data:version} = useAsync({ 
-        promiseFn: loadVersion,
-        playerId: 1 
-    });
 
     return (
-        <>
-            <img src={resolveIcon("rocket.svg")}/>
-            <h1>💖 Hello World!</h1>
-            <p>Welcome to your Electron application.</p>
+        <section className='text-center reset'>
 
+            <div className="grand_image">
+                <Image src={"rocket.svg"} />
+            </div>
 
-            <h2>Versions</h2>
+            <h4 className='reset_description'>
+                Open a folder containing your documents to get started
+                <br/><br/><br/>
+                <Button 
+                    icon='folder.svg'
+                    label='Open New Directory'
+                    onClick={()=>({})}
+                />
+            </h4>
 
-            {
-                version && (
-                    <>
-                        <span id="chrome--version">Chrome Version: {version.chrome}</span><br/>
-                        <span id="node--version">Node version: {version.node}</span><br/>
-                        <span id="electron--version">Electron version: {version.electron}</span><br/>
-                        <span id="electron--version">Consonant toolkit version: {version.app}</span>
-                    </>
-                )
-            }
-        </>
+        </section>
     )
 }
 
