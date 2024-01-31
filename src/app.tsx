@@ -38,7 +38,7 @@ const App = () => {
                     <>
                         <span id="chrome--version">Chrome Version: {version.chrome}</span><br/>
                         <span id="node--version">Node version: {version.node}</span><br/>
-                        <span id="electron--version">Electron version: {version.electron}</span>
+                        <span id="electron--version">Electron version: {version.electron}</span><br/>
                         <span id="electron--version">Consonant toolkit version: {version.app}</span>
                     </>
                 )

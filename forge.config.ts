@@ -4,6 +4,8 @@ import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
 import { VitePlugin } from '@electron-forge/plugin-vite';
+// import {copy} from 'fs-extra';
+// import path from 'path';
 
 const config: ForgeConfig = {
   packagerConfig: {},
@@ -43,7 +45,23 @@ const config: ForgeConfig = {
         prerelease: true
       }
     }
-  ]
+  ],
+  // copy: [
+  //   {
+  //     from: 'path/to/static/files',
+  //     to: 'relative/path/in/out/directory'
+  //   }
+  // ],
+
+  // hooks: {
+
+  //   packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
+  //     // Copy static files to the build directory
+  //     // For example, if you have a directory named 'static' in your project
+  //     console.log(buildPath, 'assets');
+  //     await copy('assets', path.join(buildPath, 'assets'));
+  //   },
+  // }
 };
 
 export default config;
