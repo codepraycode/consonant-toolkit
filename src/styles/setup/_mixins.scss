@@ -7,3 +7,10 @@
         Arial,
         sans-serif;
 }
+
+
+@mixin transition($property: all, $duration: 300ms) {
+    transition-property: $property;
+    transition-duration: $duration;
+    transition-timing-function: linear;
+}

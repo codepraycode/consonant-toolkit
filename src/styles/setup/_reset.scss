@@ -37,6 +37,13 @@ body {
 
     padding: 0;
     margin: 0;
+
+    background-color: $light;
+}
+
+
+h3 {
+    margin: 0;
 }
 
 img,
@@ -80,4 +87,12 @@ input {
 ul[role="list"] {
     padding: 0;
     list-style: none;
+}
+
+button {
+    cursor: pointer;
+
+    &:focus {
+        outline-color: $grey !important;
+    }
 }

@@ -47,7 +47,11 @@
 
 
 // Margins
-
+.mr {
+    &-1 {
+        margin-right: .9rem;
+    }
+}
 
 .btn {
     display: flex;
@@ -57,30 +61,41 @@
 
     column-gap: .5rem;
 
-    cursor: pointer;
-
 
     .icon {
         margin-top: .1rem;
-        width: 1.5rem !important;
+        // --size: 1.3rem !important;
     }
-
-    outline: 0;
 
     border: 0;
 
     background-color: $dark;
     color: $white;
 
-    font-size: .8rem;
+    font-size: 1rem;
 
     width: 12.5rem;
-    padding-block: .66rem;
+    padding-block: .56rem;
 
     border-radius: .7rem ;
 
 
-    // &:focus {
-    //     outline: 0;
-    // }
+    &[data-transparent="true"] {
+        background-color: transparent;
+        color: $dark;
+    }
+
+
+}
+
+
+.d-flex {
+    display: flex;
+
+    &.align-center {
+        align-items: center;
+    }
+    &.justify-between {
+        justify-content: space-between;
+    }
 }
