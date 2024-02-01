@@ -1,11 +1,21 @@
 import React, { useEffect, useId } from "react";
 import Image from "./Image";
 import useAccordionController from "../context/AccordionContext";
+import Button from "./Button";
 
 
 interface IAccordion {
-    leftHeader: React.ReactNode
-    rightHeader?: React.ReactNode,
+    icon: string,
+    title:string,
+    volume: number,
+    size: number, // size in bytes
+
+    bulkAction?: {
+        label: string,
+        icon: string,
+        onClick: ()=>void
+    },
+
     children: React.ReactNode
 }
 
@@ -28,12 +38,38 @@ const Accrodion = (props:IAccordion) => {
                 {/* Left header */}
                 <div className="d-flex align-center">
 
-                    {props.leftHeader}
+                    <span className="mr-1">
+                        <Image src={props.icon} icon/>
+                    </span>
+                    <span>
+
+                        {props.title}
+                    </span>
+
+                    <span className="dot-sep">{"•"}</span>
+
+                    <span>{props.volume} item{props.volume > 1 ? 's':''}</span>
+
+                    <span className="dot-sep">{"•"}</span>
+
+                    {/* Should be calculated */}
+                    <span>{props.size}</span>
+
                 </div>
 
 
                 <div className="d-flex align-center">
-                    {props.rightHeader}
+                    {
+                        props.bulkAction && (
+
+                            <Button
+                                label={props.bulkAction.label}
+                                icon={props.bulkAction.icon}
+                                onClick={props.bulkAction.onClick}
+                                transparent
+                            />
+                        )
+                    }
 
                     <button
                         className="chevron"

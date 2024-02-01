@@ -19,6 +19,14 @@ interface ITabular {
 }
 
 const Tabular = ({row_items}:ITabular) => {
+
+    if (row_items.length < 1) {
+        return (
+            <div className='empty-space text-center'>
+                <p>Nothing here</p>
+            </div>
+        )
+    }
     return (
         <div className='tabular'>
             <div className="row_item head">

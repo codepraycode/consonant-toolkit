@@ -85,7 +85,7 @@ $icon-size: 1.3rem;
 
   ._header {
     font-size: .9rem;
-    padding-block: .8rem;
+    padding-block: 1.3rem;
     cursor: pointer;
     .icon {
       --size: 1.3rem;
@@ -212,4 +212,11 @@ $icon-size: 1.3rem;
       }
     }
   }
+}
+
+
+.empty-space {
+  text-align: center;
+  color: $grey;
+  font-size: 1.2rem;
 }
