@@ -14,14 +14,6 @@
         text-transform: capitalize;
     }
 
-    &-overflow {
-        overflow: hidden;
-        white-space: nowrap;
-        display: inline-block;
-        text-overflow: ellipsis;
-        width: 9rem;
-    }
-
     &-error {
         color: $red;
     }
@@ -98,4 +90,8 @@
     &.justify-between {
         justify-content: space-between;
     }
+}
+
+.d-inline-block {
+    display: inline-block;
 }

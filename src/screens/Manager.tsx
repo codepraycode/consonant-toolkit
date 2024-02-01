@@ -60,7 +60,7 @@ const Manager = () => {
                     />
                 )}
             >
-                <Tabular />
+                <Tabular row_items={[]}/>
             </Accrodion>
 
             <br/>
@@ -85,7 +85,7 @@ const Manager = () => {
                     </>
                 )}
             >
-                Accordion content
+                <Tabular row_items={[]}/>
             </Accrodion>
             
             <br/>
@@ -110,7 +110,7 @@ const Manager = () => {
                     </>
                 )}
             >
-                Accordion content
+                <Tabular row_items={[]}/>
             </Accrodion>
 
 

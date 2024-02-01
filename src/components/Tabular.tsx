@@ -1,7 +1,24 @@
 import React from 'react';
 import Image from './Image';
+import EditableInput from './EditableInput';
 
-const Tabular = () => {
+
+type Status = 'pending' | 'failed' | 'success';
+interface IRowItem {
+    id:string,
+    title:string,
+    course: string,
+    code: number,
+    format: string,
+    status?: Status
+}
+
+
+interface ITabular {
+    row_items: IRowItem[]
+}
+
+const Tabular = ({row_items}:ITabular) => {
     return (
         <div className='tabular'>
             <div className="row_item head">
@@ -11,29 +28,25 @@ const Tabular = () => {
                 <span></span>
             </div>
 
-            <div className="row_item">
-                <span>
-                    <Image src='file.svg' icon/>
-                    Joint CBT Questions for 100 Level First Semester
-                </span>
-                <span data-empty>---</span>
-                <span>PDF</span>
-                <span>
-                    {/* <Image src='pending.svg' icon/> */}
-                    {/* <Image src='cross.svg' icon/> */}
-                    <Image src='tick.svg' icon/>
-                </span>
-            </div>
 
-            <div className="row_item">
-                <span>
+            {row_items.map((item)=>(
+            <div className="row_item" key={item.id}>
+                <div className='d-flex align-center'>
                     <Image src='file.svg' icon/>
-                    CSC 305 _CONTROL STRUCTURES IN C_
-                </span>
-                <span>CSC 305</span>
-                <span>PDF</span>
-                <span></span>
+                    
+                    <EditableInput value={item.title}/>
+                </div>
+                <div data-empty>{item.course} ({item.code})</div>
+
+                <div>{item.format}</div>
+                <div>
+                    {item.status === 'pending' && <Image src='pending.svg' icon/>}
+                    {item.status === 'failed' && <Image src='cross.svg' icon/>}
+                    {item.status === 'success' && <Image src='tick.svg' icon/>}
+                    {/* <Image src='tick.svg' icon/> */}
+                </div>
             </div>
+            ))}
         </div>
     )
 }
