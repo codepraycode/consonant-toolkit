@@ -3,11 +3,12 @@ import Button from "../components/Button";
 import Accrodion from "../components/Accordion";
 import { AccordionProvider } from "../context/AccordionContext";
 import Tabular from "../components/Tabular";
+import useFileStore from "../context/FileContext";
 
 
 const Manager = () => {
     
-    
+    const fileStore = useFileStore();
     return (
 
         <AccordionProvider>
@@ -23,7 +24,7 @@ const Manager = () => {
                     <Button
                         label="Change Directory"
                         icon="revert.svg"
-                        onClick={()=>null}
+                        onClick={()=>fileStore.updateSelected(false)}
                     />
                 </div>
             </div>

@@ -38,8 +38,14 @@ $icon-size: 1.3rem;
 
 
   &_description {
-    width: 38%;
+    width: 24rem;
     margin-inline: auto;
+    font-size: 1.1rem;
+
+    button {
+      padding-block: .96rem;
+      width: 15.2rem;
+    }
   }
 }
 

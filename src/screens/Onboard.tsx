@@ -17,7 +17,7 @@ const Onboard = () => {
     <section className='text-center reset'>
 
         <div className="grand_image">
-            <Image src={"rocket.svg"} />
+            <Image src={"rocket.png"} />
         </div>
 
         <h4 className='reset_description'>
