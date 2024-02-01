@@ -22,8 +22,8 @@ const Accrodion = (props:IAccordion) => {
     }, []);
 
     return (
-        <div className="accordion container" onClick={()=>setActive(isActive ? null : id)}>
-            <div className="_header d-flex align-center justify-between">
+        <div className="accordion">
+            <div className="_header d-flex align-center justify-between" onClick={()=>setActive(isActive ? null : id)}>
 
                 {/* Left header */}
                 <div className="d-flex align-center">
@@ -37,9 +37,9 @@ const Accrodion = (props:IAccordion) => {
 
                     <button
                         className="chevron"
-                        onClick={()=>{
-                          setActive(isActive ? null : id);
-                        }}
+                        // onClick={()=>{
+                        //   setActive(isActive ? null : id);
+                        // }}
                         data-active={isActive}
                     >
                         <Image src="chevron-down.svg" icon/>
