@@ -3,14 +3,50 @@ import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
+import { MakerDMG } from '@electron-forge/maker-dmg';
+import { MakerWix } from '@electron-forge/maker-wix';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 // import {copy} from 'fs-extra';
-// import path from 'path';
+import path from 'path';
 
 const config: ForgeConfig = {
-  packagerConfig: {},
+  packagerConfig: {
+    icon: path.join(__dirname, 'app_assets/icon') // no file extension required
+  },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [
+    new MakerSquirrel({
+       // An URL to an ICO file to use as the application icon (displayed in Control Panel > Programs and Features).
+        iconUrl: path.join(__dirname, 'app_assets', 'icon.ico'),
+        // The ICO file to use as the icon for the generated Setup.exe
+        setupIcon: path.join(__dirname, 'app_assets', 'icon.ico')
+    }),
+    new MakerZIP({}, ['darwin']),
+    new MakerRpm({}),
+    new MakerDeb({
+        options: {
+          maintainer: 'codepraycode',
+          homepage: 'https://github.com/codepraycode',
+          icon: path.join(__dirname, 'app_assets', 'icon.png')
+        }
+    }),
+    new MakerDMG({
+       icon: path.join(__dirname, 'app_assets', 'icon.icns')
+    }),
+    new MakerWix({
+      icon: path.join(__dirname, 'app_assets', 'icon.ico')
+    }),
+    // {
+    //   name: '@electron-forge/maker-deb',
+    //   config: {
+    //     options: {
+    //       maintainer: 'codepraycode',
+    //       homepage: 'https://github.com/codepraycode',
+    //       icon: path.join(__dirname, 'app_assets', 'icon.png')
+    //     }
+    //   }
+    // }
+  ],
   plugins: [
     new VitePlugin({
       // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
@@ -45,23 +81,7 @@ const config: ForgeConfig = {
         prerelease: true
       }
     }
-  ],
-  // copy: [
-  //   {
-  //     from: 'path/to/static/files',
-  //     to: 'relative/path/in/out/directory'
-  //   }
-  // ],
-
-  // hooks: {
-
-  //   packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
-  //     // Copy static files to the build directory
-  //     // For example, if you have a directory named 'static' in your project
-  //     console.log(buildPath, 'assets');
-  //     await copy('assets', path.join(buildPath, 'assets'));
-  //   },
-  // }
+  ]
 };
 
 export default config;
