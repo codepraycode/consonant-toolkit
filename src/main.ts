@@ -76,4 +76,9 @@ app.whenReady().then(()=>{
   ipcMain.handle('app:version', ()=>{
     return app.getVersion();
   })
+  ipcMain.handle('static:path', ()=>{
+
+    if (isDevelopment) return '/static';
+    return path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/static`);
+  })
 })

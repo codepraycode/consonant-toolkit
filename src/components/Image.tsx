@@ -1,5 +1,6 @@
 import React from 'react';
-import { resolveAsset, resolveIcon } from '../utils/resolveAssets';
+import { resolveAsset } from '../utils/resolveAssets';
+import { useAsync } from 'react-async';
 
 interface IconProps {
     src: string,
@@ -13,12 +14,11 @@ interface ImageProps extends IconProps {
 
 
 
-const Icon = ({src, alt}:IconProps) => {
-    const value = resolveIcon(src);
+const Icon = ({src, alt}:IconProps) => {    
     return (
         <span className='icon'>
             <img
-                src={value}
+                src={src}
                 alt={alt || 'An Image'}
             />
         </span>
@@ -28,9 +28,9 @@ const Icon = ({src, alt}:IconProps) => {
 
 const Image = ({src, alt, icon}: ImageProps) => {
 
-    if (icon) return <Icon src={src} alt={alt}/>
+    const {data:value} = useAsync({promiseFn: resolveAsset, asset: src, icon: icon })
 
-    const value = resolveAsset(src);
+    if (icon) return <Icon src={value} alt={alt}/>
 
     return (
         <img
