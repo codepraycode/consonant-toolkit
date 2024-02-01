@@ -19,6 +19,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: path.join(__dirname, '../app_assets', 'icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -75,5 +76,10 @@ app.on('activate', () => {
 app.whenReady().then(()=>{
   ipcMain.handle('app:version', ()=>{
     return app.getVersion();
+  })
+  ipcMain.handle('static:path', ()=>{
+
+    if (isDevelopment) return '/static';
+    return path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/static`);
   })
 })

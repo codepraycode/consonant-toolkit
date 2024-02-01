@@ -31,5 +31,10 @@ contextBridge.exposeInMainWorld('api', {
         // Logger.info("Information logger")
 
         return response;
+    },
+    getStaticPath: async () => {
+        const response = await ipcRenderer.invoke("static:path");
+
+        return response;
     }
 });
