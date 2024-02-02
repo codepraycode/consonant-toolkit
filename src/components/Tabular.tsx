@@ -2,9 +2,10 @@ import React from 'react';
 import Image from './Image';
 import EditableInput from './EditableInput';
 import Preloader from './Preloader';
+import { Status } from '../utils/types';
 
 
-type Status = 'pending' | 'failed' | 'success';
+
 interface IRowItem {
     id:string,
     title:string,

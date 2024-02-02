@@ -1,4 +1,8 @@
-import { action, autorun, makeObservable, observable } from "mobx";
+import { action, autorun, computed, makeObservable, observable } from "mobx";
+import { wait } from "../utils/wait";
+import { FileCategory, IDirectoryInfo, IFilelog } from "../utils/types";
+
+
 
 
 
@@ -7,18 +11,31 @@ class FileStore {
     working_dir:string | null = null;
     error: string | null = null;
 
+
+    directoryInfo:IDirectoryInfo | null = null;
+    filelogs:IFilelog[] | null = null;
+
     constructor() {
         
         makeObservable(this, {
             ready: observable,
             working_dir: observable,
             error: observable,
+            directoryInfo: observable,
+            filelogs: observable,
 
             updateReady: action,
             updateError: action,
             analyzeDirectory: action,
-
             resetState: action,
+            updateDirectoryInfo: action,
+            updateFileLogs: action,
+
+            validFiles: computed,
+            fixFiles: computed,
+            invalidFiles: computed
+
+
         });
 
         autorun(()=>{
@@ -36,6 +53,52 @@ class FileStore {
                 error: this.error
             })
         })
+    }
+
+
+    get validFiles() {
+
+        if (!this.filelogs) return null;
+        
+        return this.filelogs.filter((item)=>{
+            return item.category === FileCategory.VALID
+        })
+    }
+
+    get fixFiles() {
+
+        if (!this.filelogs) return null;
+        
+        return this.filelogs.filter((item)=>{
+            return item.category === FileCategory.FIX
+        })
+    }
+
+    get invalidFiles() {
+
+        if (!this.filelogs) return null;
+        
+        return this.filelogs.filter((item)=>{
+            return item.category === FileCategory.INVALID
+        })
+    }
+
+    async updateDirectoryInfo() {
+
+        await wait()
+        
+        this.directoryInfo = {
+            name: '100 level document',
+            size: 13201,
+            items: 21
+        };
+    }
+
+    async updateFileLogs() {
+
+        await wait(5)
+        
+        this.filelogs = [];
     }
 
 
@@ -71,7 +134,8 @@ class FileStore {
             this.updateReady(true);
         }
 
-
+        this.updateDirectoryInfo();
+        this.updateFileLogs();
 
 
     }
