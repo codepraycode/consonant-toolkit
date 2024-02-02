@@ -3,6 +3,7 @@
 
 import { contextBridge, ipcRenderer } from "electron";
 
+
 window.addEventListener('DOMContentLoaded', ()=>{
     const replaceText = (selector:string, text:string)=>{
         const element = document.getElementById(selector);
@@ -41,5 +42,11 @@ contextBridge.exposeInMainWorld('api', {
         const response = await ipcRenderer.invoke("dialog:openDirectory");
 
         return response && response[0];
+    },
+
+    isDirReadable: async (dir:string) => {
+        const isAccessible = await ipcRenderer.invoke("dir:readable", {dir});
+
+        return isAccessible;
     }
 });

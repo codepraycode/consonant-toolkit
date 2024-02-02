@@ -24,7 +24,7 @@ const Manager = () => {
                     <Button
                         label="Change Directory"
                         icon="revert.svg"
-                        onClick={()=>fileStore.updateSelected(false)}
+                        onClick={()=>fileStore.resetState()}
                     />
                 </div>
             </div>

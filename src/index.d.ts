@@ -9,6 +9,8 @@ export interface IAPI {
 
     selectDirectory: ()=>Promise<string>,
 
+    isDirReadable: (dir:string)=>Promise<boolean>,
+
     envVersion: {
         chrome: string,
         node: string,

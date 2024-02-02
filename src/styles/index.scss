@@ -63,9 +63,26 @@ $icon-size: 1.3rem;
   column-gap: 1rem;
 
   justify-content: center;
+}
 
+.onboard-loader {
   color: $grey;
 }
+
+
+.onboard-issue {
+  color: $red;
+
+  font-size: 1rem;
+
+  .big-icon {
+    --size: 3rem;
+  }
+
+
+
+}
+
 
 .icon {
   display: inline-block;

@@ -2,6 +2,8 @@ import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import path from 'path';
 import { updateElectronApp } from 'update-electron-app';
 import logger from 'electron-log/main';
+import fs from 'fs';
+
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -94,5 +96,19 @@ app.whenReady().then(()=>{
         })
 
         return dirPath;
-    })
+    });
+
+
+    ipcMain.handle("dir:readable", (_, {dir}:{dir:string}) => {
+
+      try {
+        fs.accessSync(dir, fs.constants.R_OK);
+        return true;
+      } catch (err) {
+        console.error(err);
+
+        return false;
+      }
+    });
+
 })

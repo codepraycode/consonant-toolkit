@@ -15,7 +15,7 @@ const App = observer(() => {
     const filestore = useFileStore();
 
 
-    if( !filestore.selected) return (
+    if( !filestore.ready) return (
         <Onboard />
     )
 

@@ -12,6 +12,21 @@ const Onboard = () => {
     const filestore = useFileStore();
 
 
+    const cta = (<Button 
+                    icon='folder.svg'
+                    label='Open New Directory'
+                    onClick={()=>{
+
+                        // filestore.resetState();
+
+                        window.api.selectDirectory()
+                        .then((path)=> {
+
+                            filestore.updateWorkingDir(path);
+                        })
+                    }}
+                />)
+
     let template = (
         <span className="onboard-loader">
             <Preloader /> Loading...
@@ -24,23 +39,27 @@ const Onboard = () => {
             <>
                 Open a folder containing your documents to get started
                 <br/><br/>
-                <Button 
-                    icon='folder.svg'
-                    label='Open New Directory'
-                    onClick={()=>{
-                        // filestore.updateSelected(true);
 
-                        window.api.selectDirectory()
-                        .then((path)=> {
-                            // console.log("Open:", path);
-
-                            filestore.updateWorkingDir(path);
-                        })
-                    }}
-                />
+                {cta}
             </>
         )
     }
+
+    if (filestore.error) {
+        template = <span className="onboard-issue">
+
+
+            <span className="big-icon"><Image src="warning.svg" icon/></span>
+            <br/>
+            {filestore.error} <br/>
+            <small>Path: {filestore.working_dir}</small>
+
+            <br/><br/>
+
+            {cta}
+        </span>
+    }
+
 
 
     return (
