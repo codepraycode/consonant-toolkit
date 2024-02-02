@@ -1,13 +1,13 @@
 import React from "react";
 import Image from "../components/Image";
 import Button from "../components/Button";
-import useFileStore from "../context/FileContext";
+// import useFileStore from "../context/FileContext";
 
 
 const Onboard = () => {
     
     
-    const filestore = useFileStore();
+    // const filestore = useFileStore();
 
 
 
@@ -27,7 +27,12 @@ const Onboard = () => {
                 icon='folder.svg'
                 label='Open New Directory'
                 onClick={()=>{
-                    filestore.updateSelected(true);
+                    // filestore.updateSelected(true);
+
+                    window.api.selectDirectory()
+                    .then((path)=> {
+                        console.log("Open:", path);
+                    })
                 }}
             />
         </h4>

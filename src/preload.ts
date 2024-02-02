@@ -28,13 +28,18 @@ contextBridge.exposeInMainWorld('api', {
     getAppVersion: async () => {
         const response = await ipcRenderer.invoke("app:version");
 
-        // Logger.info("Information logger")
-
         return response;
     },
+
     getStaticPath: async () => {
         const response = await ipcRenderer.invoke("static:path");
 
         return response;
+    },
+
+    selectDirectory: async () => {
+        const response = await ipcRenderer.invoke("dialog:openDirectory");
+
+        return response && response[0];
     }
 });

@@ -4,7 +4,11 @@ export {};
 
 export interface IAPI {
     getAppVersion: ()=>Promise<string>,
+    
     getStaticPath: ()=>Promise<string>,
+
+    selectDirectory: ()=>Promise<string>,
+
     envVersion: {
         chrome: string,
         node: string,
@@ -12,8 +16,9 @@ export interface IAPI {
     },
 }
 
+
 declare global {
-  interface Window {
-    api: IAPI
-  }
+    interface Window {
+        api: IAPI
+    }
 }

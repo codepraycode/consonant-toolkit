@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import path from 'path';
 import { updateElectronApp } from 'update-electron-app';
 import logger from 'electron-log/main';
@@ -74,12 +74,25 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 app.whenReady().then(()=>{
-  ipcMain.handle('app:version', ()=>{
-    return app.getVersion();
-  })
-  ipcMain.handle('static:path', ()=>{
+  
+    ipcMain.handle('app:version', ()=>{
+        return app.getVersion();
+    });
 
-    if (isDevelopment) return '/static';
-    return path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/static`);
-  })
+
+    ipcMain.handle('static:path', ()=>{
+
+        if (isDevelopment) return '/static';
+        return path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/static`);
+    });
+
+    ipcMain.handle("dialog:openDirectory", () => {
+
+        // ! Take care of error cases
+        const dirPath = dialog.showOpenDialogSync({
+            properties: ['openDirectory']
+        })
+
+        return dirPath;
+    })
 })
