@@ -83,15 +83,9 @@ class FileStore {
         })
     }
 
-    async updateDirectoryInfo() {
-
-        await wait()
+    async updateDirectoryInfo(details: IDirectoryInfo) {
         
-        this.directoryInfo = {
-            name: '100 level document',
-            size: 13201,
-            items: 21
-        };
+        this.directoryInfo = details;
     }
 
     async updateFileLogs() {
@@ -130,11 +124,16 @@ class FileStore {
 
         if (!isready) {
             this.updateError("Directory is not accessible, consider using another directory");
-        } else {
-            this.updateReady(true);
+            return;
         }
 
-        this.updateDirectoryInfo();
+        this.updateReady(true);
+
+        const [details, files] = await window.api.getDirdetails(this.working_dir);
+
+        this.updateDirectoryInfo(details);
+
+        console.log(files.length, 'file(s)');
         this.updateFileLogs();
 
 

@@ -1,3 +1,4 @@
+import { IDirectoryInfo } from "./utils/types";
 
 export {};
 
@@ -10,6 +11,7 @@ export interface IAPI {
     selectDirectory: ()=>Promise<string>,
 
     isDirReadable: (dir:string)=>Promise<boolean>,
+    getDirdetails: (dir:string)=>Promise<[IDirectoryInfo, string[]]>,
 
     envVersion: {
         chrome: string,

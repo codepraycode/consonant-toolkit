@@ -7,6 +7,7 @@ import useFileStore from "../context/FileContext";
 
 import Preloader from "../components/Preloader";
 import { observer } from "mobx-react-lite";
+import { bytesToSize } from "../utils/filesUtils";
 
 
 const Manager = () => {
@@ -32,9 +33,9 @@ const Manager = () => {
                         <>
                             {directoryMeta.name}
                             <span>
-                                13.2MB
+                                {bytesToSize(directoryMeta.size)}
                                 <span className="sep"> | </span>
-                                21 items
+                                {directoryMeta.items} item{directoryMeta.items > 1 ? 's':null}
                             </span>
                         </>
                     }

@@ -111,4 +111,41 @@ app.whenReady().then(()=>{
       }
     });
 
+
+    ipcMain.handle("dir:details", (_, {dir}:{dir:string}) => {
+
+
+        return new Promise((resolve, rejected)=>{
+
+            fs.readdir(dir, (err, files)=> {
+
+                if (err) {
+                    console.error("Error occured:", err);
+
+                    rejected("Error loading directory details");
+                    return
+                }
+
+
+                const details = {
+                    name: path.basename(dir),
+                    size: 0,
+                    items: files.length
+                }
+
+                files.forEach((file:string)=>{
+                    const fileDetails = fs.lstatSync(path.join(dir, file));
+
+                    if (fileDetails.isDirectory()) return;
+
+                    details.size += fileDetails.size;
+                });
+
+
+                resolve([details, files]);
+
+            })
+        })
+    });
+
 })

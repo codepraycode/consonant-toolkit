@@ -48,5 +48,11 @@ contextBridge.exposeInMainWorld('api', {
         const isAccessible = await ipcRenderer.invoke("dir:readable", {dir});
 
         return isAccessible;
+    },
+
+    getDirdetails: async (dir:string) => {
+        const [details, files] = await ipcRenderer.invoke("dir:details", {dir});
+
+        return [details, files];
     }
 });
