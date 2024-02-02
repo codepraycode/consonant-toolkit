@@ -26,6 +26,7 @@ const App = observer(() => {
 const root = createRoot(document.getElementById('root'));
 root.render(
     <FileWrapper>
-        <App />
+        {/* <App /> */}
+        <Manager />
     </FileWrapper>
 );

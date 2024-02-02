@@ -2,6 +2,7 @@ import React, { useEffect, useId } from "react";
 import Image from "./Image";
 import useAccordionController from "../context/AccordionContext";
 import Button from "./Button";
+import Preloader from "./Preloader";
 
 
 interface IAccordion {
@@ -15,6 +16,8 @@ interface IAccordion {
         icon: string,
         onClick: ()=>void
     },
+
+    loading?:boolean
 
     children: React.ReactNode
 }
@@ -36,24 +39,30 @@ const Accrodion = (props:IAccordion) => {
             <div className="_header d-flex align-center justify-between" onClick={()=>setActive(isActive ? null : id)}>
 
                 {/* Left header */}
-                <div className="d-flex align-center">
+                <div className="d-flex align-center" data-loading>
 
-                    <span className="mr-1">
-                        <Image src={props.icon} icon/>
-                    </span>
-                    <span>
+                    {props.loading ? <Preloader />: (
+                        <>
+                            <span className="mr-1">
+                                <Image src={props.icon} icon/>
+                            </span>
 
-                        {props.title}
-                    </span>
+                            <span>
 
-                    <span className="dot-sep">{"•"}</span>
+                                {props.title}
+                            </span>
 
-                    <span>{props.volume} item{props.volume > 1 ? 's':''}</span>
+                            <span className="dot-sep">{"•"}</span>
 
-                    <span className="dot-sep">{"•"}</span>
+                            <span>{props.volume} item{props.volume > 1 ? 's':''}</span>
 
-                    {/* Should be calculated */}
-                    <span>{props.size}</span>
+                            <span className="dot-sep">{"•"}</span>
+
+                            {/* Should be calculated */}
+                            <span>{props.size}</span>
+                        </>
+                        )
+                    }
 
                 </div>
 

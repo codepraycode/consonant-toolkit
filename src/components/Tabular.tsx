@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from './Image';
 import EditableInput from './EditableInput';
+import Preloader from './Preloader';
 
 
 type Status = 'pending' | 'failed' | 'success';
@@ -10,15 +11,24 @@ interface IRowItem {
     course: string,
     code: number,
     format: string,
-    status?: Status
+    status?: Status,
 }
 
 
 interface ITabular {
-    row_items: IRowItem[]
+    row_items: IRowItem[],
+    loading?:boolean
 }
 
-const Tabular = ({row_items}:ITabular) => {
+const Tabular = ({row_items, loading}:ITabular) => {
+
+    if (loading) {
+        return (
+            <div className='empty-space text-center'>
+                <Preloader />
+            </div>
+        )
+    }
 
     if (row_items.length < 1) {
         return (

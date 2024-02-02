@@ -134,6 +134,12 @@ $icon-size: 1.3rem;
   margin-block: 3rem 3.4rem;
   h3 {
     font-size: 2rem;
+    // background-color: red;
+
+    &[data-loading="true"] {
+      width: 60%;
+      text-align: center;
+    }
 
     span {
       font-size: .8rem;
@@ -162,6 +168,19 @@ $icon-size: 1.3rem;
     font-size: .9rem;
     padding-block: 1.3rem;
     cursor: pointer;
+
+    // & > div[data-loading="true"] {
+    //   // width: 5rem;
+    //   text-align: center;
+    // }
+
+    .preloader {
+      position: relative;
+
+      left: 5rem;
+    }
+
+
     .icon {
       --size: 1.3rem;
       // width: 1.2rem !important;
