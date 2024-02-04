@@ -2,28 +2,18 @@ import React from 'react';
 import Image from './Image';
 import EditableInput from './EditableInput';
 import Preloader from './Preloader';
-import { Status } from '../utils/types';
+import { MaterialDetail } from '../utils/types';
 
-
-
-interface IRowItem {
-    id:string,
-    title:string,
-    course: string,
-    code: number,
-    format: string,
-    status?: Status,
-}
 
 
 interface ITabular {
-    row_items: IRowItem[],
+    row_items: MaterialDetail[],
     loading?:boolean
 }
 
 const Tabular = ({row_items, loading}:ITabular) => {
 
-    if (loading) {
+    if (loading || !row_items) {
         return (
             <div className='empty-space text-center'>
                 <Preloader />
@@ -38,6 +28,8 @@ const Tabular = ({row_items, loading}:ITabular) => {
             </div>
         )
     }
+
+
     return (
         <div className='tabular'>
             <div className="row_item head">
@@ -48,23 +40,23 @@ const Tabular = ({row_items, loading}:ITabular) => {
             </div>
 
 
-            {row_items.map((item)=>(
-            <div className="row_item" key={item.id}>
-                <div className='d-flex align-center'>
-                    <Image src='file.svg' icon/>
-                    
-                    <EditableInput value={item.title}/>
-                </div>
-                <div data-empty>{item.course} ({item.code})</div>
+            {row_items.map((item, i)=>(
+                <div className="row_item" key={i}>
+                    <div className='d-flex align-center'>
+                        <Image src='file.svg' icon/>
+                        
+                        <EditableInput value={item.title}/>
+                    </div>
+                    <div data-empty>{item.course} { item.code }</div>
 
-                <div>{item.format}</div>
-                <div>
-                    {item.status === 'pending' && <Image src='pending.svg' icon/>}
-                    {item.status === 'failed' && <Image src='cross.svg' icon/>}
-                    {item.status === 'success' && <Image src='tick.svg' icon/>}
-                    {/* <Image src='tick.svg' icon/> */}
+                    <div>{item.format}</div>
+                    <div>
+                        {item.meta.status === 'pending' && <Image src='pending.svg' icon/>}
+                        {item.meta.status === 'failed' && <Image src='cross.svg' icon/>}
+                        {item.meta.status === 'success' && <Image src='tick.svg' icon/>}
+                        {/* <Image src='tick.svg' icon/> */}
+                    </div>
                 </div>
-            </div>
             ))}
         </div>
     )

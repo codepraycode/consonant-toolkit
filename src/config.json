@@ -1,0 +1,38 @@
+{
+    "supportedFilesTypes": [
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".xlsx",
+        ".pptx",
+        ".ppt"
+    ],
+    "files_dir": "/home/codepraycode/Downloads//Telegram Desktop/ChatExport_2024-01-29/files",
+    "userId": "b3e12037-c9af-483b-afb3-a9273c553bfd",
+    "bucketName": "resources",
+    "supabase": {
+        "url": "https://exetgdtuukdjprzypcsa.supabase.co",
+        "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4ZXRnZHR1dWtkanByenlwY3NhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMjM4NzE2OCwiZXhwIjoyMDE3OTYzMTY4fQ.MNxAHTrV6TrOOavYNw0-q3IC_XQoIIIshk-rjrHYvDg"
+    },
+    "typesense": {
+        "development": {
+            "host": "localhost",
+            "port": 8108,
+            "protocol": "http",
+            "apiKey": "SyC7d9Lg3vqdhJAy2foDsztCpNj4rz51",
+            "connectionTimeoutSeconds": 2,
+            "collection": "materials"
+        },
+        "production": {
+            "host": "ijkhmdwprn042bsxp-1.a1.typesense.net",
+            "port": 443,
+            "protocol": "https",
+            "apiKey": "ivqLeC3srUz1XfneA4233Y4Irh6dUDPW",
+            "connectionTimeoutSeconds": 5,
+            "collection": "materials"
+        }
+    },
+    "tables": {
+        "materials": "materials"
+    }
+}

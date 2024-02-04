@@ -1,6 +1,7 @@
 import { action, autorun, computed, makeObservable, observable } from "mobx";
-import { wait } from "../utils/wait";
-import { FileCategory, IDirectoryInfo, IFilelog } from "../utils/types";
+// import { wait } from "../utils/wait";
+import { FileByCategory, FileCategory, IDirectoryInfo, MaterialDetail } from "../utils/types";
+import { processFiles } from "../utils/filesUtils";
 
 
 
@@ -13,7 +14,7 @@ class FileStore {
 
 
     directoryInfo:IDirectoryInfo | null = null;
-    filelogs:IFilelog[] | null = null;
+    filelogs:MaterialDetail[] | null = null;
 
     constructor() {
         
@@ -50,7 +51,8 @@ class FileStore {
             console.log({
                 ready: this.ready,
                 working_dir: this.working_dir,
-                error: this.error
+                error: this.error,
+                filelogs: this.filelogs
             })
         })
     }
@@ -59,28 +61,65 @@ class FileStore {
     get validFiles() {
 
         if (!this.filelogs) return null;
-        
-        return this.filelogs.filter((item)=>{
-            return item.category === FileCategory.VALID
+
+        const response:FileByCategory = {
+            size: 0,
+            items: 0,
+            materials: []
+        }
+
+        this.filelogs.forEach((item)=>{
+            if (item.meta.category !== FileCategory.VALID) return;
+
+            response.size += item.meta.size;
+            response.items += 1;
+            response.materials.push(item);
         })
+
+        return response;
     }
 
     get fixFiles() {
 
         if (!this.filelogs) return null;
-        
-        return this.filelogs.filter((item)=>{
-            return item.category === FileCategory.FIX
+
+        const response:FileByCategory = {
+            size: 0,
+            items: 0,
+            materials: []
+        }
+
+        this.filelogs.forEach((item)=>{
+            if (item.meta.category !== FileCategory.FIX) return;
+
+            response.size += item.meta.size;
+            response.items += 1;
+            response.materials.push(item);
         })
+
+        return response;
     }
+
 
     get invalidFiles() {
 
         if (!this.filelogs) return null;
-        
-        return this.filelogs.filter((item)=>{
-            return item.category === FileCategory.INVALID
+
+        const response:FileByCategory = {
+            size: 0,
+            items: 0,
+            materials: []
+        }
+
+        this.filelogs.forEach((item)=>{
+            if (item.meta.category !== FileCategory.INVALID) return;
+
+            response.size += item.meta.size;
+            response.items += 1;
+            response.materials.push(item);
         })
+
+        return response;
     }
 
     async updateDirectoryInfo(details: IDirectoryInfo) {
@@ -88,11 +127,10 @@ class FileStore {
         this.directoryInfo = details;
     }
 
-    async updateFileLogs() {
-
-        await wait(5)
+    async updateFileLogs(files:MaterialDetail[]) {
         
-        this.filelogs = [];
+        // console.log(files);
+        this.filelogs = files;
     }
 
 
@@ -133,8 +171,8 @@ class FileStore {
 
         this.updateDirectoryInfo(details);
 
-        console.log(files.length, 'file(s)');
-        this.updateFileLogs();
+        // console.log( `${files.length} file${files.length > 1? 's':''}`, files.slice(0,5));
+        this.updateFileLogs(processFiles(files));
 
 
     }

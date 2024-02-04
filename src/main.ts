@@ -3,6 +3,7 @@ import path from 'path';
 import { updateElectronApp } from 'update-electron-app';
 import logger from 'electron-log/main';
 import fs from 'fs';
+import { IDirFile } from './utils/types';
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -133,16 +134,27 @@ app.whenReady().then(()=>{
                     items: files.length
                 }
 
+                const dir_files:IDirFile[] = [];
+
                 files.forEach((file:string)=>{
                     const fileDetails = fs.lstatSync(path.join(dir, file));
 
                     if (fileDetails.isDirectory()) return;
 
                     details.size += fileDetails.size;
+
+                    const ext = path.extname(file);
+
+                    dir_files.push({
+                      name: file,
+                      size: fileDetails.size,
+                      ext,
+                      basename: file.replace(ext, ''),
+                    })
                 });
 
 
-                resolve([details, files]);
+                resolve([details, dir_files]);
 
             })
         })
