@@ -3,6 +3,7 @@ import Image from "./Image";
 import useAccordionController from "../context/AccordionContext";
 import Button from "./Button";
 import Preloader from "./Preloader";
+import { bytesToSize } from "../utils/filesUtils";
 
 
 interface IAccordion {
@@ -59,7 +60,7 @@ const Accrodion = (props:IAccordion) => {
                             <span className="dot-sep">{"•"}</span>
 
                             {/* Should be calculated */}
-                            <span>{props.size}</span>
+                            <span>{bytesToSize(props.size)}</span>
                         </>
                         )
                     }

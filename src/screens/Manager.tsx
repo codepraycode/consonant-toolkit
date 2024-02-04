@@ -57,8 +57,8 @@ const Manager = () => {
             <Accrodion
                 icon="check.svg"
                 title="Valid"
-                volume={0}
-                size={0}
+                volume={validFiles?.items || 0}
+                size={validFiles?.size || 0}
 
                 loading={validFiles === null}
 
@@ -69,7 +69,8 @@ const Manager = () => {
                 // }}
             >
                 <Tabular
-                    row_items={[]}
+                    row_items={validFiles?.materials || []}
+                    loading={validFiles === null}
                 />
             </Accrodion>
 
@@ -79,13 +80,16 @@ const Manager = () => {
             <Accrodion
                 icon="warning.svg"
                 title="Need fixing"
-                volume={0}
-                size={0}
+                volume={fixFiles?.items || 0}
+                size={fixFiles?.size || 0}
 
                 loading={fixFiles === null}
 
             >
-                <Tabular row_items={[]}/>
+                <Tabular
+                    row_items={ fixFiles?.materials  || []}
+                    loading={fixFiles === null}
+                />
             </Accrodion>
             
             <br/>
@@ -94,13 +98,17 @@ const Manager = () => {
             <Accrodion
                 icon="bad_info.svg"
                 title="Not supported"
-                volume={0}
-                size={0}
+                volume={invalidFiles?.items || 0}
+                size={invalidFiles?.size || 0}
 
                 loading={invalidFiles === null}
 
             >
-                <Tabular row_items={[]}/>
+                <Tabular
+                    row_items={invalidFiles?.materials || []}
+                    loading={invalidFiles === null}
+                />
+                {null}
             </Accrodion>
 
 
