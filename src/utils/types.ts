@@ -20,7 +20,8 @@ export interface IDirFile {
     name: string,
     size: number,
     ext: string,
-    basename: string
+    basename: string,
+    path: string
 }
 
 
@@ -35,7 +36,8 @@ export interface Material {
 export interface MaterialMeta {
     category: FileCategory,
     status: Status | null,
-    size: number
+    size: number,
+    path: string
 }
 
 export interface MaterialDetail extends Material {

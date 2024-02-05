@@ -12,6 +12,7 @@ export interface IAPI {
 
     isDirReadable: (dir:string)=>Promise<boolean>,
     getDirdetails: (dir:string)=>Promise<[IDirectoryInfo, IDirFile[]]>,
+    openPath: (path:string)=>Promise<void>,
 
     envVersion: {
         chrome: string,
