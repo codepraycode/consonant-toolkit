@@ -10,7 +10,7 @@ type FileType = IndexedMaterials;
 
 class FileStore {
     ready = false;
-    working_dir:string | null = '/home/codepraycode/Downloads';
+    working_dir:string | null = null;
     error: string | null = null;
 
 
