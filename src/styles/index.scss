@@ -207,6 +207,24 @@ $icon-size: 1.3rem;
 
   }
 
+
+  &[data-active="true"] {
+
+    ._header {
+
+      position: sticky;
+      background-color: inherit;
+      top: 0rem;
+      z-index: 1;
+
+      // background-color: red;
+    }
+
+    ._content {
+      height: fit-content;
+    }
+  }
+
   ._content {
     position: relative;
     height: 0;
@@ -218,9 +236,6 @@ $icon-size: 1.3rem;
 
     @include mixins.transition(height);
 
-    &[data-active="true"] {
-      height: fit-content;
-    }
   }
 }
 

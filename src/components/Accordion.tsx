@@ -36,8 +36,11 @@ const Accrodion = (props:IAccordion) => {
     }, []);
 
     return (
-        <div className="accordion">
-            <div className="_header d-flex align-center justify-between" onClick={()=>setActive(isActive ? null : id)}>
+        <div className="accordion" data-active={isActive}>
+            <div
+                className="_header d-flex align-center justify-between"
+                onClick={()=>setActive(isActive ? null : id)}
+            >
 
                 {/* Left header */}
                 <div className="d-flex align-center" data-loading>
@@ -94,7 +97,7 @@ const Accrodion = (props:IAccordion) => {
             </div>
 
 
-            <div className="_content" data-active={isActive}>
+            <div className="_content">
                 {props.children}
             </div>
         </div>
