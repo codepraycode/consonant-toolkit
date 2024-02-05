@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 const Onboard = () => {
     
     
-    const filestore = useFileStore();
+    const {filestore} = useFileStore();
 
 
     const cta = (<Button 
