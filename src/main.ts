@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import path from 'path';
 import { updateElectronApp } from 'update-electron-app';
 import logger from 'electron-log/main';
@@ -144,12 +144,14 @@ app.whenReady().then(()=>{
                     details.size += fileDetails.size;
 
                     const ext = path.extname(file);
+                    const basename = file.replace(ext, '');
 
                     dir_files.push({
                       name: file,
                       size: fileDetails.size,
                       ext,
-                      basename: file.replace(ext, ''),
+                      basename,
+                      path: path.join(dir, file)
                     })
                 });
 
@@ -158,6 +160,13 @@ app.whenReady().then(()=>{
 
             })
         })
+    });
+
+
+
+    ipcMain.handle("file:open", async (_, {path}:{path:string}) => {
+      // console.log("Opening:", path)
+      await shell.openExternal("file://"+path);
     });
 
 })

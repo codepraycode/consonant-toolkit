@@ -13,6 +13,8 @@ interface ITabular {
 
 const Tabular = ({row_items, loading}:ITabular) => {
 
+
+
     if (loading || !row_items) {
         return (
             <div className='empty-space text-center'>
@@ -43,7 +45,16 @@ const Tabular = ({row_items, loading}:ITabular) => {
             {row_items.map((item, i)=>(
                 <div className="row_item" key={i}>
                     <div className='d-flex align-center'>
-                        <Image src='file.svg' icon/>
+
+
+                        <span
+                            onClick={()=>{
+                                window.api.openPath(item.meta.path)
+                            }}
+                            className='selectable'
+                        >
+                            <Image src='preview.svg' icon/>
+                        </span>
                         
                         <EditableInput value={item.title}/>
                     </div>

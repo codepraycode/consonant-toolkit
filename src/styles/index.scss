@@ -224,6 +224,9 @@ $icon-size: 1.3rem;
   }
 }
 
+.selectable {
+  cursor: pointer;
+}
 
 .tabular {
   @include mixins.container(0rem);

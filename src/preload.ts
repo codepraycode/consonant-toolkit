@@ -54,5 +54,8 @@ contextBridge.exposeInMainWorld('api', {
         const [details, files] = await ipcRenderer.invoke("dir:details", {dir});
 
         return [details, files];
+    },
+    openPath: async (path:string) => {
+        await ipcRenderer.invoke("file:open", {path});
     }
 });

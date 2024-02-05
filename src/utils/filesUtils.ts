@@ -62,7 +62,8 @@ export function processFiles(files:IDirFile[]): MaterialDetail[] {
         const meta: MaterialMeta = {
             category: determineCategory(item),
             status: null,
-            size: item.size
+            size: item.size,
+            path: item.path
         }
 
 
