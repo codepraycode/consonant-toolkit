@@ -1,7 +1,7 @@
 import { action, autorun, computed, makeObservable, observable } from "mobx";
 // import { wait } from "../utils/wait";
 import { FileByCategory, FileCategory, IDirectoryInfo, MaterialDetail } from "../utils/types";
-import { processFiles } from "../utils/filesUtils";
+import { isFileFixed, processFiles } from "../utils/filesUtils";
 
 
 
@@ -31,6 +31,7 @@ class FileStore {
             resetState: action,
             updateDirectoryInfo: action,
             updateFileLogs: action,
+            updateFile: action,
 
             validFiles: computed,
             fixFiles: computed,
@@ -68,12 +69,15 @@ class FileStore {
             materials: []
         }
 
-        this.filelogs.forEach((item)=>{
+        this.filelogs.forEach((item, index)=>{
             if (item.meta.category !== FileCategory.VALID) return;
 
             response.size += item.meta.size;
             response.items += 1;
-            response.materials.push(item);
+            response.materials.push({
+                index,
+                ...item 
+            });
         })
 
         return response;
@@ -89,17 +93,19 @@ class FileStore {
             materials: []
         }
 
-        this.filelogs.forEach((item)=>{
+        this.filelogs.forEach((item, index)=>{
             if (item.meta.category !== FileCategory.FIX) return;
 
             response.size += item.meta.size;
             response.items += 1;
-            response.materials.push(item);
+            response.materials.push({
+                index,
+                ...item 
+            });
         })
 
         return response;
     }
-
 
     get invalidFiles() {
 
@@ -111,12 +117,15 @@ class FileStore {
             materials: []
         }
 
-        this.filelogs.forEach((item)=>{
+        this.filelogs.forEach((item, index)=>{
             if (item.meta.category !== FileCategory.INVALID) return;
 
             response.size += item.meta.size;
             response.items += 1;
-            response.materials.push(item);
+            response.materials.push({
+                index,
+                ...item 
+            });
         })
 
         return response;
@@ -133,11 +142,39 @@ class FileStore {
         this.filelogs = files;
     }
 
+    updateFile(index:number, title:string) {
+
+        if (!this.filelogs[index]) return console.error("File does not exist");
+
+        // this.filelogs[index].title = title;
+        // console.log(this.filelogs[index]);
+        this.filelogs.map((item,i)=>{
+            if (i === index) {
+                const category = isFileFixed(title);
+                item.title = title;
+                item.meta.category = category;
+
+                // const {meta, ...rest} = item;
+
+
+                // this.filelogs[index] = {
+                //     ...rest,
+                //     title,
+                //     meta: {
+                //         ...meta,
+                //         category
+                //     }
+                // };
+            }
+
+            return item;
+        })
+    }
 
     updateReady(b:boolean) {
         this.ready = b;
     }
-    
+
     updateError(error: string | null) {
         this.error = error;
     }

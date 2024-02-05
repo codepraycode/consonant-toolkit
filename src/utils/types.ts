@@ -44,8 +44,12 @@ export interface MaterialDetail extends Material {
     meta: MaterialMeta
 }
 
+export interface IndexedMaterials extends MaterialDetail {
+    index: number
+}
+
 export interface FileByCategory {
     size: number,
     items: number,
-    materials: MaterialDetail[]
+    materials: IndexedMaterials[]
 }

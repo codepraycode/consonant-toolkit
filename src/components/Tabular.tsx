@@ -2,19 +2,17 @@ import React from 'react';
 import Image from './Image';
 import EditableInput from './EditableInput';
 import Preloader from './Preloader';
-import { MaterialDetail } from '../utils/types';
+import { IndexedMaterials } from '../utils/types';
 
 
 
 interface ITabular {
-    row_items: MaterialDetail[],
+    row_items: IndexedMaterials[],
     loading?:boolean,
-    editable?:boolean
+    onUpdate?:(index:number, value:string)=>void;
 }
 
-const Tabular = ({row_items, loading, editable}:ITabular) => {
-
-
+const Tabular = ({row_items, loading, onUpdate}:ITabular) => {
 
     if (loading || !row_items) {
         return (
@@ -31,6 +29,9 @@ const Tabular = ({row_items, loading, editable}:ITabular) => {
             </div>
         )
     }
+
+
+    const editable = Boolean(onUpdate);
 
 
     return (
@@ -57,7 +58,11 @@ const Tabular = ({row_items, loading, editable}:ITabular) => {
                             <Image src='preview.svg' icon/>
                         </span>
                         
-                        <EditableInput value={item.title} editable={editable}/>
+                        <EditableInput
+                            value={item.title}
+                            editable={editable}
+                            onChange={(value:string)=>onUpdate(item.index, value)}
+                        />
                     </div>
                     <div data-empty>{item.course.toUpperCase()} { item.code }</div>
 
