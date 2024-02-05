@@ -8,10 +8,11 @@ import { MaterialDetail } from '../utils/types';
 
 interface ITabular {
     row_items: MaterialDetail[],
-    loading?:boolean
+    loading?:boolean,
+    editable?:boolean
 }
 
-const Tabular = ({row_items, loading}:ITabular) => {
+const Tabular = ({row_items, loading, editable}:ITabular) => {
 
 
 
@@ -56,11 +57,11 @@ const Tabular = ({row_items, loading}:ITabular) => {
                             <Image src='preview.svg' icon/>
                         </span>
                         
-                        <EditableInput value={item.title}/>
+                        <EditableInput value={item.title} editable={editable}/>
                     </div>
-                    <div data-empty>{item.course} { item.code }</div>
+                    <div data-empty>{item.course.toUpperCase()} { item.code }</div>
 
-                    <div>{item.format}</div>
+                    <div>{item.format.toUpperCase()}</div>
                     <div>
                         {item.meta.status === 'pending' && <Image src='pending.svg' icon/>}
                         {item.meta.status === 'failed' && <Image src='cross.svg' icon/>}
