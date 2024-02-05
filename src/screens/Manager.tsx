@@ -106,6 +106,8 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
                         row_items={validFiles?.materials || []}
                         loading={validFiles === null}
                         onUpload={handleUpload}
+                        // preview
+                        onUpdate={handleUpdate}
                     />
                 </Accrodion>
 
