@@ -32,6 +32,7 @@ class FileStore {
             updateDirectoryInfo: action,
             updateFileLogs: action,
             updateFile: action,
+            trashFile: action,
 
             validFiles: computed,
             fixFiles: computed,
@@ -131,6 +132,30 @@ class FileStore {
         return response;
     }
 
+    get rejectedFiles() {
+
+        if (!this.filelogs) return null;
+
+        const response:FileByCategory = {
+            size: 0,
+            items: 0,
+            materials: []
+        }
+
+        this.filelogs.forEach((item, index)=>{
+            if (item.meta.category !== FileCategory.REJECTED) return;
+
+            response.size += item.meta.size;
+            response.items += 1;
+            response.materials.push({
+                index,
+                ...item 
+            });
+        })
+
+        return response;
+    }
+
     async updateDirectoryInfo(details: IDirectoryInfo) {
         
         this.directoryInfo = details;
@@ -169,6 +194,30 @@ class FileStore {
 
             return item;
         })
+    }
+
+
+    trashFile(index:number) {
+
+        if (!this.filelogs[index]) return console.error("File does not exist");
+
+        // this.filelogs[index].title = title;
+        // console.log(this.filelogs[index]);
+        // this.filelogs.splice(index, 1);
+
+        if (!this.filelogs[index]) return console.error("File does not exist");
+
+        // this.filelogs[index].title = title;
+        // console.log(this.filelogs[index]);
+        this.updateFileLogs(this.filelogs.map((item,i)=>{
+            if (i === index) {
+                item.meta.category = FileCategory.REJECTED;
+            }
+
+            return item;
+        })
+)
+            
     }
 
     updateReady(b:boolean) {

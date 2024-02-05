@@ -2,6 +2,7 @@ export enum FileCategory {
     VALID='valid',
     FIX = 'fix',
     INVALID='invalid',
+    REJECTED='rejected',
 }
 export enum Status {
     PENDING='pending',

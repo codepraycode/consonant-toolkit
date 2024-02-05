@@ -9,10 +9,12 @@ import { IndexedMaterials } from '../utils/types';
 interface ITabular {
     row_items: IndexedMaterials[],
     loading?:boolean,
+    preview?:boolean,
     onUpdate?:(index:number, value:string)=>void;
+    onDelete?:(index:number)=>void;
 }
 
-const Tabular = ({row_items, loading, onUpdate}:ITabular) => {
+const Tabular = ({row_items, preview, loading, onUpdate, onDelete}:ITabular) => {
 
     if (loading || !row_items) {
         return (
@@ -51,11 +53,15 @@ const Tabular = ({row_items, loading, onUpdate}:ITabular) => {
 
                         <span
                             onClick={()=>{
+                                if(!preview) return
                                 window.api.openPath(item.meta.path)
                             }}
                             className='selectable'
                         >
-                            <Image src='preview.svg' icon/>
+                            {!preview ?
+                                <Image src='file.svg' icon/>
+                            :
+                                <Image src='preview.svg' icon/>}
                         </span>
                         
                         <EditableInput
@@ -71,6 +77,15 @@ const Tabular = ({row_items, loading, onUpdate}:ITabular) => {
                         {item.meta.status === 'pending' && <Image src='pending.svg' icon/>}
                         {item.meta.status === 'failed' && <Image src='cross.svg' icon/>}
                         {item.meta.status === 'success' && <Image src='tick.svg' icon/>}
+                        {onDelete && (
+                            <span
+                                onClick={()=>onDelete(item.index)}
+                                className='selectable'
+                            >
+                                <Image src='file-reject.svg' icon/>
+                            </span>
+                            )
+                        }
                         {/* <Image src='tick.svg' icon/> */}
                     </div>
                 </div>

@@ -297,8 +297,7 @@ $icon-size: 1.3rem;
 
     &:read-only {
       background: inherit !important;
-      color: inherit;
-      opacity: 1;
+      color: lighten($color: $dark, $amount: 50%);
 
       &:focus {
         outline: 0;
