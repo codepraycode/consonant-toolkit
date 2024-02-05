@@ -5,6 +5,7 @@ export enum FileCategory {
     REJECTED='rejected',
 }
 export enum Status {
+    UPLOAD='upload',
     PENDING='pending',
     FAIELD='failed',
     SUCCESS='success'

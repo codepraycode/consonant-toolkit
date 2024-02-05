@@ -98,6 +98,7 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
                     <Tabular
                         row_items={validFiles?.materials || []}
                         loading={validFiles === null}
+                        upload
                     />
                 </Accrodion>
 

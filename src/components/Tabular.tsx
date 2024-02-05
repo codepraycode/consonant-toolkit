@@ -10,11 +10,12 @@ interface ITabular {
     row_items: IndexedMaterials[],
     loading?:boolean,
     preview?:boolean,
+    upload?:boolean,
     onUpdate?:(index:number, value:string)=>void;
     onDelete?:(index:number)=>void;
 }
 
-const Tabular = ({row_items, preview, loading, onUpdate, onDelete}:ITabular) => {
+const Tabular = ({row_items, preview, upload, loading, onUpdate, onDelete}:ITabular) => {
 
     if (loading || !row_items) {
         return (
@@ -74,9 +75,17 @@ const Tabular = ({row_items, preview, loading, onUpdate, onDelete}:ITabular) => 
 
                     <div>{item.format.toUpperCase()}</div>
                     <div>
-                        {item.meta.status === 'pending' && <Image src='pending.svg' icon/>}
-                        {item.meta.status === 'failed' && <Image src='cross.svg' icon/>}
-                        {item.meta.status === 'success' && <Image src='tick.svg' icon/>}
+                        {
+                            upload && (
+                                <>
+                                    {item.meta.status === 'pending' && <Image src='pending.svg' icon/>}
+                                    {item.meta.status === 'failed' && <Image src='cross.svg' icon/>}
+                                    {item.meta.status === 'success' && <Image src='tick.svg' icon/>}
+                                    {item.meta.status === 'upload' && <Image src='upload.svg' icon/>}
+                                </>
+                            )
+                        }
+
                         {onDelete && (
                             <span
                                 onClick={()=>onDelete(item.index)}
