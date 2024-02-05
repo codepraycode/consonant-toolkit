@@ -7,7 +7,7 @@ export enum FileCategory {
 export enum Status {
     UPLOAD='upload',
     PENDING='pending',
-    FAIELD='failed',
+    FAILED='failed',
     SUCCESS='success'
 }
 

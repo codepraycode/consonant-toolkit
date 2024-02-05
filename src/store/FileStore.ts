@@ -33,6 +33,7 @@ class FileStore {
             updateFileLogs: action,
             updateFile: action,
             trashFile: action,
+            uploadFile: action,
 
             validFiles: computed,
             fixFiles: computed,
@@ -194,20 +195,30 @@ class FileStore {
 
         // this.filelogs[index].title = title;
         // console.log(this.filelogs[index]);
-        // this.filelogs.splice(index, 1);
-
-        if (!this.filelogs[index]) return console.error("File does not exist");
-
-        // this.filelogs[index].title = title;
-        // console.log(this.filelogs[index]);
-        this.updateFileLogs(this.filelogs.map((item,i)=>{
+        this.filelogs.map((item,i)=>{
             if (i === index) {
                 item.meta.category = FileCategory.REJECTED;
             }
 
             return item;
         })
-)
+            
+    }
+
+    uploadFile(index:number) {
+
+        if (!this.filelogs[index]) return console.error("File does not exist");
+
+        // this.filelogs[index].title = title;
+        // console.log(this.filelogs[index]);
+        
+        this.updateFileLogs(this.filelogs.map((item,i)=>{
+            if (i === index) {
+                item.meta.status = Status.PENDING;
+            }
+
+            return item;
+        }))
             
     }
 

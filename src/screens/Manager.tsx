@@ -40,6 +40,12 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
         filestore.trashFile(index)
     }
 
+    const handleUpload = (index:number) => {
+        // console.log("Upload", index);
+
+        filestore.uploadFile(index)
+    }
+
     return (
         <>
             <AccordionProvider>
@@ -98,7 +104,7 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
                     <Tabular
                         row_items={validFiles?.materials || []}
                         loading={validFiles === null}
-                        upload
+                        onUpload={handleUpload}
                     />
                 </Accrodion>
 

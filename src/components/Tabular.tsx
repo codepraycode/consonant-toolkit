@@ -2,7 +2,7 @@ import React from 'react';
 import Image from './Image';
 import EditableInput from './EditableInput';
 import Preloader from './Preloader';
-import { IndexedMaterials } from '../utils/types';
+import { IndexedMaterials, Status } from '../utils/types';
 
 
 
@@ -10,12 +10,12 @@ interface ITabular {
     row_items: IndexedMaterials[],
     loading?:boolean,
     preview?:boolean,
-    upload?:boolean,
     onUpdate?:(index:number, value:string)=>void;
     onDelete?:(index:number)=>void;
+    onUpload?:(index:number)=>void;
 }
 
-const Tabular = ({row_items, preview, upload, loading, onUpdate, onDelete}:ITabular) => {
+const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITabular) => {
 
     if (loading || !row_items) {
         return (
@@ -35,7 +35,7 @@ const Tabular = ({row_items, preview, upload, loading, onUpdate, onDelete}:ITabu
 
 
     const editable = Boolean(onUpdate);
-
+    const uploadable = Boolean(onUpload)
 
     return (
         <div className='tabular'>
@@ -75,16 +75,23 @@ const Tabular = ({row_items, preview, upload, loading, onUpdate, onDelete}:ITabu
 
                     <div>{item.format.toUpperCase()}</div>
                     <div>
-                        {
-                            upload && (
-                                <>
-                                    {item.meta.status === 'pending' && <Image src='pending.svg' icon/>}
-                                    {item.meta.status === 'failed' && <Image src='cross.svg' icon/>}
-                                    {item.meta.status === 'success' && <Image src='tick.svg' icon/>}
-                                    {item.meta.status === 'upload' && <Image src='upload.svg' icon/>}
-                                </>
+                        {/* {
+                            uploadable && (
                             )
-                        }
+                        } */}
+                        <>
+                            {item.meta.status === Status.PENDING && <Image src='pending.svg' icon/>}
+                            {item.meta.status === Status.FAILED && <Image src='cross.svg' icon/>}
+                            {item.meta.status === Status.SUCCESS && <Image src='tick.svg' icon/>}
+                            {item.meta.status === Status.UPLOAD && (
+                                <span
+                                    onClick={()=>onUpload(item.index)}
+                                    className='selectable'
+                                >
+                                    <Image src='upload.svg' icon/>
+                                </span>
+                            )}
+                        </>
 
                         {onDelete && (
                             <span
