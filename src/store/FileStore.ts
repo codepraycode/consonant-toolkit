@@ -1,6 +1,6 @@
 import { action, autorun, computed, makeObservable, observable } from "mobx";
 // import { wait } from "../utils/wait";
-import { FileByCategory, FileCategory, IDirectoryInfo, MaterialDetail } from "../utils/types";
+import { FileByCategory, FileCategory, IDirectoryInfo, MaterialDetail, Status } from "../utils/types";
 import { isFileFixed, processFiles } from "../utils/filesUtils";
 
 
@@ -178,18 +178,9 @@ class FileStore {
                 const category = isFileFixed(title);
                 item.title = title;
                 item.meta.category = category;
-
-                // const {meta, ...rest} = item;
-
-
-                // this.filelogs[index] = {
-                //     ...rest,
-                //     title,
-                //     meta: {
-                //         ...meta,
-                //         category
-                //     }
-                // };
+                if (category === FileCategory.VALID) {
+                    item.meta.status = Status.UPLOAD;
+                }
             }
 
             return item;
