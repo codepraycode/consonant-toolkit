@@ -89,6 +89,7 @@ const Manager = () => {
                 <Tabular
                     row_items={ fixFiles?.materials  || []}
                     loading={fixFiles === null}
+                    editable
                 />
             </Accrodion>
             

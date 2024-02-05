@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-const EditableInput = ({value}:{value:string}) =>{
+const EditableInput = ({value, editable}:{value:string, editable?:boolean}) =>{
 
     const [val, setVal] = useState(value);
 
@@ -12,6 +12,7 @@ const EditableInput = ({value}:{value:string}) =>{
             onChange={(e)=>{
                 setVal(()=>e.target.value);
             }}
+            readOnly={!editable}
             type='text'
         />
     )
