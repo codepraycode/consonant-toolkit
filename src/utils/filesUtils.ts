@@ -1,5 +1,6 @@
 import { FileCategory, IDirFile, Material, MaterialDetail, MaterialMeta } from "./types";
 import config from '../config.json';
+// import { slugify } from "./slugify";
 
 const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 
@@ -30,12 +31,19 @@ function determineCategory(file:IDirFile): FileCategory {
 
     if (!isSupported(file)) {
         return FileCategory.INVALID;
-    }
-
-    // if ()
-    //  TODO: Validate that it contains course, course code, and description;
+    }    
 
     if (!standard_check_pattern.test(file.basename)) {
+        return FileCategory.FIX
+    }
+
+    return FileCategory.VALID;
+}
+
+
+// On consequent changes to file title, we check if valid or need fix
+export function isFileFixed(file_label:string){
+    if (!standard_check_pattern.test(file_label)) {
         return FileCategory.FIX
     }
 
@@ -59,6 +67,8 @@ export function processFiles(files:IDirFile[]): MaterialDetail[] {
 
         if (isDuplicate(item)) return;
 
+
+        // File category is done once, to know the nature of the file
         const meta: MaterialMeta = {
             category: determineCategory(item),
             status: null,

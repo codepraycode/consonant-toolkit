@@ -22,6 +22,14 @@ const Manager = () => {
     const invalidFiles = fileStore.invalidFiles;
     const fixFiles = fileStore.fixFiles;
 
+
+    const handleUpdate = (index:number, value:string) => {
+        // console.log(index, value);
+        fileStore.updateFile(index, value);
+
+        // console.log(fileStore.filelogs[index])
+    }
+
     return (
 
         <AccordionProvider>
@@ -89,7 +97,7 @@ const Manager = () => {
                 <Tabular
                     row_items={ fixFiles?.materials  || []}
                     loading={fixFiles === null}
-                    editable
+                    onUpdate={handleUpdate}
                 />
             </Accrodion>
             
