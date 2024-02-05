@@ -24,6 +24,7 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
     const validFiles = filestore.validFiles;
     const invalidFiles = filestore.invalidFiles;
     const fixFiles = filestore.fixFiles;
+    const rejectedFiles = filestore.rejectedFiles;
 
 
     const handleUpdate = (index:number, value:string) => {
@@ -31,6 +32,12 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
         filestore.updateFile(index, value);
 
         // console.log(fileStore.filelogs[index])
+    }
+
+    const handleDelete = (index:number) => {
+        // console.log("Delete", index);
+
+        filestore.trashFile(index)
     }
 
     return (
@@ -102,14 +109,16 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
                     title="Need fixing"
                     volume={fixFiles?.items || 0}
                     size={fixFiles?.size || 0}
-
                     loading={fixFiles === null}
+                    
 
                 >
                     <Tabular
                         row_items={ fixFiles?.materials  || []}
                         loading={fixFiles === null}
+                        preview
                         onUpdate={handleUpdate}
+                        onDelete={handleDelete}
                     />
                 </Accrodion>
                 
@@ -128,6 +137,23 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
                     <Tabular
                         row_items={invalidFiles?.materials || []}
                         loading={invalidFiles === null}
+                    />
+                    {null}
+                </Accrodion>
+                 <br/>
+
+                <Accrodion
+                    icon="file-reject.svg"
+                    title="Your Rejected files"
+                    volume={rejectedFiles?.items || 0}
+                    size={rejectedFiles?.size || 0}
+
+                    loading={rejectedFiles === null}
+
+                >
+                    <Tabular
+                        row_items={rejectedFiles?.materials || []}
+                        loading={rejectedFiles === null}
                     />
                     {null}
                 </Accrodion>
