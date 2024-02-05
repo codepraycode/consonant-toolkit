@@ -15,7 +15,7 @@ interface ITabular {
     onUpload?:(index:FileIndex)=>void;
 }
 
-const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITabular) => {
+const Tabular = ({row_items, onUpload, loading, onUpdate, onDelete}:ITabular) => {
 
     if (loading || !row_items) {
         return (
@@ -33,9 +33,26 @@ const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITa
         )
     }
 
-
-    const editable = Boolean(onUpdate);
+    const updateable = Boolean(onUpdate);
     const uploadable = Boolean(onUpload)
+    
+    
+    const isEditable = (item:IndexedMaterials) => {
+        // if (!updateable) return false;
+
+        const isUploadState = item.meta.status === Status.UPLOAD;
+
+        if (updateable && uploadable && isUploadState) return true;
+        if (updateable && !uploadable) return true;
+
+
+        // if () {
+        //     return true;
+        // }
+
+        return false;
+    }
+
 
     return (
         <div className='tabular'>
@@ -47,22 +64,27 @@ const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITa
             </div>
 
 
-            {row_items.map((item)=>(
+            {row_items.map((item)=>{
+                const editable = isEditable(item);
+                return (
                 <div className="row_item" key={item.index}>
                     <div className='d-flex align-center'>
 
 
                         <span
                             onClick={()=>{
-                                if(!preview) return
+                                if(!editable) return
                                 window.api.openPath(item.meta.path)
                             }}
                             className='selectable'
                         >
-                            {!preview ?
-                                <Image src='file.svg' icon/>
-                            :
-                                <Image src='preview.svg' icon/>}
+                            {
+                                editable &&
+                                <Image src={'preview.svg'} icon/>}
+                            { !editable &&
+                                <Image src={'file.svg'} icon/>
+                            }
+                            
                         </span>
                         
                         <EditableInput
@@ -78,9 +100,8 @@ const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITa
                         {
                             uploadable && (
                                 <>
-                                    {item.meta.status === Status.PENDING && <Image src='pending.svg' icon/>}
-                                    {item.meta.status === Status.FAILED && <Image src='cross.svg' icon/>}
                                     {item.meta.status === Status.SUCCESS && <Image src='tick.svg' icon/>}
+                                    {item.meta.status === Status.PENDING && <Image src='pending.svg' icon/>}
                                     {item.meta.status === Status.UPLOAD && (
                                         <span
                                             onClick={()=>onUpload(item.index)}
@@ -89,6 +110,7 @@ const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITa
                                             <Image src='upload.svg' icon/>
                                         </span>
                                     )}
+                                    {item.meta.status === Status.FAILED && <Image src='cross.svg' icon/>}
                                 </>
                             )
                         }
@@ -105,7 +127,8 @@ const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITa
                         {/* <Image src='tick.svg' icon/> */}
                     </div>
                 </div>
-            ))}
+            )
+            })}
         </div>
     )
 }

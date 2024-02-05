@@ -24,6 +24,7 @@ const EditableInput = (props:IEditable) =>{
         <input
             value={val}
             onBlur={(e)=>{
+                if (!editable) return
                 onChange(e.target.value);
             }}
             onChange={(e)=>{
