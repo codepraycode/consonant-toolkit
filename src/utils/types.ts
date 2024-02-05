@@ -46,12 +46,21 @@ export interface MaterialDetail extends Material {
     meta: MaterialMeta
 }
 
+
+export type FileIndex = string;
+
 export interface IndexedMaterials extends MaterialDetail {
-    index: number
+    index: FileIndex
 }
 
 export interface FileByCategory {
     size: number,
     items: number,
     materials: IndexedMaterials[]
+}
+
+export interface FileSendParams {
+    name: string,
+    path:string,
+    format: string
 }

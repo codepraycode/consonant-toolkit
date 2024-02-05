@@ -3,7 +3,11 @@ import path from 'path';
 import { updateElectronApp } from 'update-electron-app';
 import logger from 'electron-log/main';
 import fs from 'fs';
-import { IDirFile } from './utils/types';
+import { FileSendParams, IDirFile } from './utils/types';
+import bucket from './lib/supabase/storage';
+import config from './config.json';
+import { insertDbRow } from './lib/supabase/database';
+import { MaterialTbRow } from './lib/supabase/types';
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -168,5 +172,61 @@ app.whenReady().then(()=>{
       // console.log("Opening:", path)
       await shell.openExternal("file://"+path);
     });
+
+    ipcMain.handle("file:send", async(_, {params}:{params:FileSendParams})=>{
+
+      // const path = `${material.title}.${material.format}`
+
+      // console.log("Uploading:", params.path);
+      // console.log(params.name);
+
+      const file_buffer = fs.readFileSync(params.path);
+
+      const blob = new Blob([file_buffer]);
+
+
+      const {data, error} = await bucket.upload({
+          path: params.path,
+          asset: blob
+      });
+
+
+      if (error) {
+
+          if (error.message.includes("already exists")) {
+              // stat_pointer.duplicates += 1;
+
+              throw new Error("duplicate");
+          } else {
+              // stat_pointer.failed += 1;
+              // stat_pointer.failed_files.push(pathname);
+          }
+
+          return null;
+      }
+
+      if (!data) {
+        throw new Error("No Data");
+      }
+
+      
+      
+      const meta_data = {
+          title: params.name,
+          user: config.userId,
+          asset_access: data.access,
+          asset_download: data.download,
+          asset_id: data.id,
+          asset_type: params.format
+      }
+
+      
+      const material = await insertDbRow<MaterialTbRow>(
+          meta_data as MaterialTbRow
+      )
+          
+      // // stat_pointer.uploaded += 1;
+      return material;
+    })
 
 })

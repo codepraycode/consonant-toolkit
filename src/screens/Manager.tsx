@@ -9,6 +9,7 @@ import Preloader from "../components/Preloader";
 import { observer } from "mobx-react-lite";
 import { bytesToSize } from "../utils/filesUtils";
 import Prompt from "../components/Prompt";
+import { FileIndex } from "../utils/types";
 
 
 type Fn = ()=>void;
@@ -27,20 +28,20 @@ const Manager = observer(({updatePrompt}:{updatePrompt:(onReset:Fn, onConfirm:Fn
     const rejectedFiles = filestore.rejectedFiles;
 
 
-    const handleUpdate = (index:number, value:string) => {
+    const handleUpdate = (index:FileIndex, value:string) => {
         // console.log(index, value);
-        filestore.updateFile(index, value);
+        filestore.updateFileTitle(index, value);
 
         // console.log(fileStore.filelogs[index])
     }
 
-    const handleDelete = (index:number) => {
+    const handleDelete = (index:FileIndex) => {
         // console.log("Delete", index);
 
         filestore.trashFile(index)
     }
 
-    const handleUpload = (index:number) => {
+    const handleUpload = (index:FileIndex) => {
         // console.log("Upload", index);
 
         filestore.uploadFile(index)

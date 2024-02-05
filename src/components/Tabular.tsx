@@ -2,7 +2,7 @@ import React from 'react';
 import Image from './Image';
 import EditableInput from './EditableInput';
 import Preloader from './Preloader';
-import { IndexedMaterials, Status } from '../utils/types';
+import { FileIndex, IndexedMaterials, Status } from '../utils/types';
 
 
 
@@ -10,9 +10,9 @@ interface ITabular {
     row_items: IndexedMaterials[],
     loading?:boolean,
     preview?:boolean,
-    onUpdate?:(index:number, value:string)=>void;
-    onDelete?:(index:number)=>void;
-    onUpload?:(index:number)=>void;
+    onUpdate?:(index:FileIndex, value:string)=>void;
+    onDelete?:(index:FileIndex)=>void;
+    onUpload?:(index:FileIndex)=>void;
 }
 
 const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITabular) => {
@@ -47,8 +47,8 @@ const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITa
             </div>
 
 
-            {row_items.map((item, i)=>(
-                <div className="row_item" key={i}>
+            {row_items.map((item)=>(
+                <div className="row_item" key={item.index}>
                     <div className='d-flex align-center'>
 
 

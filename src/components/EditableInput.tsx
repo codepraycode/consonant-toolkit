@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { debounce } from "lodash";
 
 
@@ -15,17 +15,20 @@ const EditableInput = (props:IEditable) =>{
 
     const {value, editable, onChange} = props;
     
-    // const [val, setVal] = useState(value);
+    const [val, setVal] = useState(value);
 
 
     // const handleChange = useCallback(debounce(onChange, DEBOUNCE_TIMEOUT), []);
 
     return (
         <input
-            value={value}
-            onChange={(e)=>{
-                // setVal(()=>e.target.value);
+            value={val}
+            onBlur={(e)=>{
                 onChange(e.target.value);
+            }}
+            onChange={(e)=>{
+                setVal(()=>e.target.value);
+                // onChange(e.target.value);
             }}
             readOnly={!editable}
             type='text'
