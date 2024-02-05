@@ -1,5 +1,6 @@
-import { FileCategory, IDirFile, Material, MaterialDetail, MaterialMeta } from "./types";
+import { FileCategory, IDirFile, IndexedMaterials, Material, MaterialMeta, Status } from "./types";
 import config from '../config.json';
+import { slugify } from "./slugify";
 // import { slugify } from "./slugify";
 
 const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -50,10 +51,10 @@ export function isFileFixed(file_label:string){
     return FileCategory.VALID;
 }
 
-export function processFiles(files:IDirFile[]): MaterialDetail[] {
+export function processFiles(files:IDirFile[]): IndexedMaterials[] {
 
 
-    const materials:MaterialDetail[] = [];
+    const materials:IndexedMaterials[] = [];
 
     // Process files here accoring to standard
     files.forEach((item)=>{
@@ -69,9 +70,10 @@ export function processFiles(files:IDirFile[]): MaterialDetail[] {
 
 
         // File category is done once, to know the nature of the file
+        const category = determineCategory(item);
         const meta: MaterialMeta = {
-            category: determineCategory(item),
-            status: null,
+            category,
+            status: category !== FileCategory.VALID ? null:Status.UPLOAD,
             size: item.size,
             path: item.path
         }
@@ -79,6 +81,7 @@ export function processFiles(files:IDirFile[]): MaterialDetail[] {
 
         materials.push({
             ...data,
+            index:slugify(item.path),
             meta
         })
         

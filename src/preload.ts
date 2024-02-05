@@ -2,6 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from "electron";
+import { FileSendParams } from "./utils/types";
 
 
 window.addEventListener('DOMContentLoaded', ()=>{
@@ -57,5 +58,10 @@ contextBridge.exposeInMainWorld('api', {
     },
     openPath: async (path:string) => {
         await ipcRenderer.invoke("file:open", {path});
+    },
+    sendFile: async (params:FileSendParams) => {
+        const obj = await ipcRenderer.invoke("file:send", {params});
+
+        return obj
     }
 });

@@ -1,11 +1,12 @@
 import { action, autorun, computed, makeObservable, observable } from "mobx";
 // import { wait } from "../utils/wait";
-import { FileByCategory, FileCategory, IDirectoryInfo, MaterialDetail, Status } from "../utils/types";
+import { FileByCategory, FileCategory, FileIndex, IDirectoryInfo, IndexedMaterials, Status } from "../utils/types";
 import { isFileFixed, processFiles } from "../utils/filesUtils";
 
 
 
 
+type FileType = IndexedMaterials;
 
 class FileStore {
     ready = false;
@@ -14,7 +15,7 @@ class FileStore {
 
 
     directoryInfo:IDirectoryInfo | null = null;
-    filelogs:MaterialDetail[] | null = null;
+    filelogs:FileType[] | null = null;
 
     constructor() {
         
@@ -31,7 +32,7 @@ class FileStore {
             resetState: action,
             updateDirectoryInfo: action,
             updateFileLogs: action,
-            updateFile: action,
+            updateAFile: action,
             trashFile: action,
             uploadFile: action,
 
@@ -71,13 +72,13 @@ class FileStore {
             materials: []
         }
 
-        this.filelogs.forEach((item, index)=>{
+        this.filelogs.forEach((item)=>{
             if (item.meta.category !== FileCategory.VALID) return;
 
             response.size += item.meta.size;
             response.items += 1;
             response.materials.push({
-                index,
+                // index: slugify(item.title),
                 ...item 
             });
         })
@@ -95,13 +96,13 @@ class FileStore {
             materials: []
         }
 
-        this.filelogs.forEach((item, index)=>{
+        this.filelogs.forEach((item)=>{
             if (item.meta.category !== FileCategory.FIX) return;
 
             response.size += item.meta.size;
             response.items += 1;
             response.materials.push({
-                index,
+                // index: slugify(item.title),
                 ...item 
             });
         })
@@ -119,13 +120,13 @@ class FileStore {
             materials: []
         }
 
-        this.filelogs.forEach((item, index)=>{
+        this.filelogs.forEach((item)=>{
             if (item.meta.category !== FileCategory.INVALID) return;
 
             response.size += item.meta.size;
             response.items += 1;
             response.materials.push({
-                index,
+                // index: slugify(item.title),
                 ...item 
             });
         })
@@ -143,13 +144,13 @@ class FileStore {
             materials: []
         }
 
-        this.filelogs.forEach((item, index)=>{
+        this.filelogs.forEach((item)=>{
             if (item.meta.category !== FileCategory.REJECTED) return;
 
             response.size += item.meta.size;
             response.items += 1;
             response.materials.push({
-                index,
+                // index: slugify(item.title),
                 ...item 
             });
         })
@@ -157,69 +158,181 @@ class FileStore {
         return response;
     }
 
+
     async updateDirectoryInfo(details: IDirectoryInfo) {
         
         this.directoryInfo = details;
     }
 
-    async updateFileLogs(files:MaterialDetail[]) {
+    async updateFileLogs(files:FileType[]) {
         
         // console.log(files);
         this.filelogs = files;
     }
 
-    updateFile(index:number, title:string) {
 
-        if (!this.filelogs[index]) return console.error("File does not exist");
+    getFileIndex(index:FileIndex): [number, FileType] | [null, null] {
+        // let file:IndexedMaterials | null = null;
 
-        // this.filelogs[index].title = title;
-        // console.log(this.filelogs[index]);
-        this.filelogs.map((item,i)=>{
-            if (i === index) {
-                const category = isFileFixed(title);
-                item.title = title;
-                item.meta.category = category;
-                if (category === FileCategory.VALID) {
-                    item.meta.status = Status.UPLOAD;
-                }
-            }
+        const fileindex = this.filelogs.findIndex((p) => {
+            // console.log(index, p.index === index);
+            return p.index === index
+        });
 
-            return item;
-        })
+        // console.log(index, fileindex)
+
+        if (fileindex !== -1) {
+            const file = this.filelogs[fileindex];
+
+            // console.log(index, file)
+
+            return [fileindex, file];
+        }
+
+        return [null, null];
+    }
+
+    updateAFile(index: FileIndex, new_file:FileType) {
+
+        const [fileIndex] = this.getFileIndex(index);
+
+        if (!fileIndex) return console.error("File does not exist");
+
+
+        this.filelogs[fileIndex] = {...new_file};
     }
 
 
-    trashFile(index:number) {
+    updateFileTitle(index:FileIndex, title:string) {
+        const [fileIndex, file] = this.getFileIndex(index);
 
-        if (!this.filelogs[index]) return console.error("File does not exist");
+        if (!fileIndex) return console.error("File does not exist");
 
-        // this.filelogs[index].title = title;
-        // console.log(this.filelogs[index]);
-        this.filelogs.map((item,i)=>{
-            if (i === index) {
-                item.meta.category = FileCategory.REJECTED;
+        let status:Status;
+
+        const category = isFileFixed(title);
+
+        if (category === FileCategory.VALID) {
+            status = Status.UPLOAD;
+        }
+
+
+        const {meta, ...rest} = file;
+
+        const new_data = {
+            ...rest,
+            title,
+            meta: {
+                ...meta,
+                category,
+                status
             }
+        }
 
-            return item;
-        })
-            
+        // console.log(index, new_data)
+
+        this.updateAFile(index, new_data);
+
+
     }
 
-    uploadFile(index:number) {
 
-        if (!this.filelogs[index]) return console.error("File does not exist");
-
-        // this.filelogs[index].title = title;
-        // console.log(this.filelogs[index]);
+    trashFile(index:FileIndex) {
         
-        this.updateFileLogs(this.filelogs.map((item,i)=>{
-            if (i === index) {
-                item.meta.status = Status.PENDING;
+        const [fileIndex, file] = this.getFileIndex(index);
+
+        if (!fileIndex) return console.error("File does not exist");
+
+        const {meta, ...rest} = file;
+
+
+        this.updateAFile(index, {
+            ...rest,
+            meta: {
+                ...meta,
+                category: FileCategory.REJECTED,
+            }
+        });
+
+            
+    }
+
+    async uploadFile(index:FileIndex) {
+
+        const [fileIndex, file] = this.getFileIndex(index);
+
+        if (!fileIndex) return console.error("File does not exist");
+
+        // this.filelogs[index].title = title;
+        // console.log(this.filelogs[index]);
+
+        const {meta, ...rest} = file;
+        const new_file = {
+            ...rest,
+            meta: {
+                ...meta,
+                status: Status.PENDING
+            }
+        }
+
+        this.updateAFile(index, {
+            ...rest,
+            meta: {
+                ...meta,
+                status: Status.PENDING
+            }
+        })
+
+
+        // this.filelogs[index] = {...new_file};
+
+        try {
+
+            const material = await window.api.sendFile({
+                path: file.meta.path,
+                name: `${file.title}.${file.format}`,
+                format: file.format
+            });
+
+            console.log(material)
+
+
+            const {meta, ...rest} = new_file;
+
+            this.updateAFile(index, {
+                ...rest,
+                id: material.id,
+                meta: {
+                    ...meta,
+                    status: Status.SUCCESS
+                }
+            })
+
+            // this.filelogs[index] = {
+            //     ...new_file,
+            //     id: material.id
+            // };
+        } catch(err) {
+            console.error(err);
+
+            let status: Status;
+
+            if (err.message.includes('duplicate')) {
+                status = Status.SUCCESS;
+            } else {
+                status = Status.FAILED;
             }
 
-            return item;
-        }))
-            
+            this.updateAFile(index, {
+                ...new_file,
+                meta: {
+                    ...new_file.meta,
+                    status
+                }
+            })
+
+        }
+
     }
 
     updateReady(b:boolean) {
