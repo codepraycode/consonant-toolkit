@@ -253,6 +253,8 @@ $icon-size: 1.3rem;
       display: grid;
       grid-template-columns: 3fr 2fr 1fr .3fr;
 
+
+
       &:last-of-type  {
         // background-color: red;
         padding-bottom: 1rem;
@@ -262,9 +264,17 @@ $icon-size: 1.3rem;
         color: $grey;
         text-transform: uppercase;
         font-size: .8rem;
+
+        span {
+          // background-color: red;
+          padding-left: 2rem;
+          padding-block: 1rem ;
+          border-right: 1px solid $light;
+          border-bottom: 1px solid $light;
+        }
       }
 
-      & > div {
+      & > div{
         padding-block: 1.1rem;
         border-right: 1px solid $light;
 
