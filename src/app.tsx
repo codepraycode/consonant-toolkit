@@ -4,6 +4,7 @@ import Onboard from './screens/Onboard';
 import useFileStore, { FileWrapper } from './context/FileContext';
 import { observer } from 'mobx-react-lite';
 import Manager from './screens/Manager';
+// import Prompt from './components/Prompt';
 
 
 
@@ -12,7 +13,7 @@ import Manager from './screens/Manager';
 
 const App = observer(() => {
 
-    const filestore = useFileStore();
+    const {filestore} = useFileStore();
 
 
     if( !filestore.ready) return (
@@ -28,5 +29,6 @@ root.render(
     <FileWrapper>
         <App />
         {/* <Manager /> */}
+        {/* <Prompt open/> */}
     </FileWrapper>
 );
