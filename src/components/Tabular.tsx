@@ -75,23 +75,23 @@ const Tabular = ({row_items, preview, onUpload, loading, onUpdate, onDelete}:ITa
 
                     <div>{item.format.toUpperCase()}</div>
                     <div>
-                        {/* {
+                        {
                             uploadable && (
+                                <>
+                                    {item.meta.status === Status.PENDING && <Image src='pending.svg' icon/>}
+                                    {item.meta.status === Status.FAILED && <Image src='cross.svg' icon/>}
+                                    {item.meta.status === Status.SUCCESS && <Image src='tick.svg' icon/>}
+                                    {item.meta.status === Status.UPLOAD && (
+                                        <span
+                                            onClick={()=>onUpload(item.index)}
+                                            className='selectable'
+                                        >
+                                            <Image src='upload.svg' icon/>
+                                        </span>
+                                    )}
+                                </>
                             )
-                        } */}
-                        <>
-                            {item.meta.status === Status.PENDING && <Image src='pending.svg' icon/>}
-                            {item.meta.status === Status.FAILED && <Image src='cross.svg' icon/>}
-                            {item.meta.status === Status.SUCCESS && <Image src='tick.svg' icon/>}
-                            {item.meta.status === Status.UPLOAD && (
-                                <span
-                                    onClick={()=>onUpload(item.index)}
-                                    className='selectable'
-                                >
-                                    <Image src='upload.svg' icon/>
-                                </span>
-                            )}
-                        </>
+                        }
 
                         {onDelete && (
                             <span
