@@ -1,14 +1,12 @@
 import { SupabaseClient, createClient } from "@supabase/supabase-js";
-import config from '../../config.json';
 
-const { url, apiKey } = config.supabase;
 
+const { SUPERBASE_URL, SUPERBASE_API_KEY } =  process.env;
 
 const supabase = ((): SupabaseClient =>{
 
-
     if (!global._supabaseInstance) {
-        global._supabaseInstance = createClient(url, apiKey);
+        global._supabaseInstance = createClient(SUPERBASE_URL, SUPERBASE_API_KEY);
     }
 
     return global._supabaseInstance;

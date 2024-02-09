@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import type { ForgeConfig } from '@electron-forge/shared-types';
 import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
@@ -6,12 +8,14 @@ import { MakerRpm } from '@electron-forge/maker-rpm';
 import { MakerDMG } from '@electron-forge/maker-dmg';
 import { MakerWix } from '@electron-forge/maker-wix';
 import { VitePlugin } from '@electron-forge/plugin-vite';
-// import {copy} from 'fs-extra';
 import path from 'path';
+
 
 const config: ForgeConfig = {
   packagerConfig: {
-    icon: path.join(__dirname, 'app_assets/icon') // no file extension required
+    icon: path.join(__dirname, 'app_assets/icon'), // no file extension required
+    appBundleId: 'me.codepraycode.consonant',
+    name: 'Consonant toolkit',
   },
   rebuildConfig: {},
   makers: [

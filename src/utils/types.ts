@@ -64,3 +64,10 @@ export interface FileSendParams {
     path:string,
     format: string
 }
+
+export interface EnvCred {
+    supabase: {
+        SUPERBASE_API_KEY: string;
+        SUPERBASE_URL: string;
+    }
+}

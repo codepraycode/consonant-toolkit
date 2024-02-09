@@ -9,10 +9,6 @@
     ],
     "userId": "b3e12037-c9af-483b-afb3-a9273c553bfd",
     "bucketName": "resources",
-    "supabase": {
-        "url": "https://exetgdtuukdjprzypcsa.supabase.co",
-        "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4ZXRnZHR1dWtkanByenlwY3NhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMjM4NzE2OCwiZXhwIjoyMDE3OTYzMTY4fQ.MNxAHTrV6TrOOavYNw0-q3IC_XQoIIIshk-rjrHYvDg"
-    },
     "typesense": {
         "development": {
             "host": "localhost",

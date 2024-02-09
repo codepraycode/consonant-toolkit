@@ -8,6 +8,8 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
+    "make:windows": "electron-forge make --platform=win32",
+    "make:mac": "electron-forge make --platform=darwin",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
@@ -51,6 +53,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",
+    "dotenv": "^16.4.1",
     "electron-log": "^5.1.0",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
