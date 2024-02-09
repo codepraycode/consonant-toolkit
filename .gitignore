@@ -92,3 +92,4 @@ typings/
 out/
 
 test.ts
+src/config.json
