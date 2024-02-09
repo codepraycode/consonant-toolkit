@@ -1,5 +1,5 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { IDirFile, IDirectoryInfo } from "./utils/types";
+import { EnvCred, IDirFile, IDirectoryInfo } from "./utils/types";
 import { MaterialTbRow } from "./lib/supabase/types";
 
 export {};
@@ -11,6 +11,7 @@ export interface IAPI {
     getStaticPath: ()=>Promise<string>,
 
     selectDirectory: ()=>Promise<string>,
+    getEnv: ()=> EnvCred,
 
     isDirReadable: (dir:string)=>Promise<boolean>,
     getDirdetails: (dir:string)=>Promise<[IDirectoryInfo, IDirFile[]]>,
