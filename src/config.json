@@ -9,24 +9,6 @@
     ],
     "userId": "b3e12037-c9af-483b-afb3-a9273c553bfd",
     "bucketName": "resources",
-    "typesense": {
-        "development": {
-            "host": "localhost",
-            "port": 8108,
-            "protocol": "http",
-            "apiKey": "SyC7d9Lg3vqdhJAy2foDsztCpNj4rz51",
-            "connectionTimeoutSeconds": 2,
-            "collection": "materials"
-        },
-        "production": {
-            "host": "ijkhmdwprn042bsxp-1.a1.typesense.net",
-            "port": 443,
-            "protocol": "https",
-            "apiKey": "ivqLeC3srUz1XfneA4233Y4Irh6dUDPW",
-            "connectionTimeoutSeconds": 5,
-            "collection": "materials"
-        }
-    },
     "tables": {
         "materials": "materials"
     }
