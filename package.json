@@ -2,7 +2,7 @@
   "name": "consonant-toolkit",
   "productName": "consonant-toolkit",
   "version": "1.0.5",
-  "description": "Utility to manager materials",
+  "description": "A utility application for managing Consonant",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -10,6 +10,7 @@
     "make": "electron-forge make",
     "make:windows": "electron-forge make --platform=win32",
     "make:mac": "electron-forge make --platform=darwin",
+    "make:linux:snap": "electron-forge make --target=snap",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
@@ -18,7 +19,7 @@
     "codepraycode"
   ],
   "author": {
-    "name": "Precious Olusola",
+    "name": "codepraycode",
     "email": "preciousolusola16@gmail.com"
   },
   "repository": {
@@ -31,6 +32,7 @@
     "@electron-forge/maker-deb": "^7.2.0",
     "@electron-forge/maker-dmg": "^7.2.0",
     "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-snap": "^7.2.0",
     "@electron-forge/maker-squirrel": "^7.2.0",
     "@electron-forge/maker-wix": "^7.2.0",
     "@electron-forge/maker-zip": "^7.2.0",

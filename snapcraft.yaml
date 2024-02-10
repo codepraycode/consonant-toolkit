@@ -1,0 +1,33 @@
+name: consonant-toolkit
+version: '1.0.5'
+summary: A utility application to manage Consonant
+description: |
+  This is a utility application to manange Consonant.
+  Visit Consonant: https://consonant.codepraycode.me/
+base: core22
+confinement: strict
+grade: stable
+apps:
+  consonant-toolkit:
+    command: consonant-toolkit
+    extensions: [gnome]
+    plugs:
+      - browser-support
+      - network
+      - network-bind
+    environment:
+      TMPDIR: $XDG_RUNTIME_DIR
+parts:
+  consonant-toolkit:
+    plugin: dump
+    source: ./out/make/deb/x64/consonant-toolkit_*
+    override-build: |
+      npm run make
+      cp -rv ./out/make/deb/x64/consonant-toolkit_*.deb $SNAPCRAFT_PART_INSTALL/consonant-toolkit
+    build-snaps:
+      - node/14/stable
+    build-packages:
+      - unzip
+    stage-packages:
+      - libnss3
+      - libnspr4
