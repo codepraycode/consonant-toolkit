@@ -37,6 +37,10 @@ jobs:
     - uses: actions/setup-node@master
       with:
         node-version: 18
+    - name: Install WiX Toolset
+      run: choco install wixtoolset
+    - name: Set up WiX Toolset
+      run: echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $env:PATH
     - name: install dependencies
       run: npm install
     - name: build
