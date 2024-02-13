@@ -1,0 +1,19 @@
+name: Build distributables
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_for_windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 14
+    - name: Install dependencies
+      run: npm install
+    - name: Publish for Windows
+      run: npm run publish --target=win32 --arch=x64
