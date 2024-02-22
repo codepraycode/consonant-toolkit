@@ -25,6 +25,8 @@ jobs:
         node-version: 18
     - name: install dependencies
       run: npm install
+    - name: install appdmg
+      run: npm install -g appdmg
     - name: build
       run: npm run make
   
