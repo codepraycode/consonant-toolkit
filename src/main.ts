@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import path from 'path';
 import { updateElectronApp } from 'update-electron-app';
@@ -8,7 +9,6 @@ import bucket from './lib/supabase/storage';
 import config from './config.json';
 import { insertDbRow } from './lib/supabase/database';
 import { MaterialTbRow } from './lib/supabase/types';
-
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {

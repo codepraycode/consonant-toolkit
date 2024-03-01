@@ -17,9 +17,6 @@ const config: ForgeConfig = {
     icon: path.join(__dirname, 'app_assets/icon'), // no file extension required
     appBundleId: 'me.codepraycode.consonant',
     appCategoryType:'Utility',
-    extraResource: [
-      path.join(__dirname, '.env')
-    ]
   },
   rebuildConfig: {},
   makers: [
