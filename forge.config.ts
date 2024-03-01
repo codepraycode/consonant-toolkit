@@ -17,6 +17,9 @@ const config: ForgeConfig = {
     icon: path.join(__dirname, 'app_assets/icon'), // no file extension required
     appBundleId: 'me.codepraycode.consonant',
     appCategoryType:'Utility',
+    extraResource: [
+      path.join(__dirname, '.env')
+    ]
   },
   rebuildConfig: {},
   makers: [
@@ -40,26 +43,34 @@ const config: ForgeConfig = {
        icon: path.join(__dirname, 'app_assets', 'icon.icns')
     }),
     new MakerWix({
-      icon: path.join(__dirname, 'app_assets', 'icon.ico')
+      icon: path.join(__dirname, 'app_assets', 'icon.ico'),
+      name: "Consonant toolkit",
+      version: "1.0.5",
+      // summary:"A utility application to manage Consonant",
+      description: `
+      This is a utility application to manange Consonant.
+
+      Visit Consonant: https://consonant.codepraycode.me/
+      `,
     }),
     new MakerSnap({
-    name: "Consonant toolkit",
-    version: "1.0.5",
-    summary:"A utility application to manage Consonant",
-    description: `
-    This is a utility application to manange Consonant.
+      name: "Consonant toolkit",
+      version: "1.0.5",
+      summary:"A utility application to manage Consonant",
+      description: `
+      This is a utility application to manange Consonant.
 
-    Visit Consonant: https://consonant.codepraycode.me/
-    `,
+      Visit Consonant: https://consonant.codepraycode.me/
+      `,
 
-    confinement: 'strict',
-    // base: "core18",
-    grade: 'stable',    
+      confinement: 'strict',
+      // base: "core18",
+      grade: 'stable',    
 
-    // icon: path.join(__dirname, 'app_assets', 'icon.png'),
-    // issues: 'https://github.com/codepraycode/consonant-toolkit/issues',
-    // website: 'https://consonant.codepraycode.me',
-}),
+      // icon: path.join(__dirname, 'app_assets', 'icon.png'),
+      // issues: 'https://github.com/codepraycode/consonant-toolkit/issues',
+      // website: 'https://consonant.codepraycode.me',
+    }),
   ],
   plugins: [
     new VitePlugin({
