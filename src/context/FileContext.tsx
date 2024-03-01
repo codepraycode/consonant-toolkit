@@ -5,18 +5,27 @@ import FileStore from '../store/FileStore';
 
 // ================================================
 
-const FileContext = createContext<FileStore | null>(null);
+interface IContext {
+    filestore: FileStore,
+}
 
-const useFileStore = ()=>useContext(FileContext) as FileStore;
+const FileContext = createContext<IContext | null>(null);
+
+const useFileStore = ()=>useContext(FileContext) as IContext;
 export default useFileStore;
 
 
 export const FileWrapper: FC<{ children: ReactNode}> = ({ children }) => {
 
-    const searchStore = new FileStore();
+    const filestore = new FileStore();
+
+
+    const context = {
+        filestore
+    }
 
     return (
-        <FileContext.Provider value={searchStore}>
+        <FileContext.Provider value={context}>
             { children }
         </FileContext.Provider>
     )

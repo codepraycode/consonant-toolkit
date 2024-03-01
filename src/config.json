@@ -1,0 +1,15 @@
+{
+    "supportedFilesTypes": [
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".xlsx",
+        ".pptx",
+        ".ppt"
+    ],
+    "userId": "b3e12037-c9af-483b-afb3-a9273c553bfd",
+    "bucketName": "resources",
+    "tables": {
+        "materials": "materials"
+    }
+}
