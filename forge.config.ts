@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import type { ForgeConfig } from '@electron-forge/shared-types';
 import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
@@ -5,13 +7,16 @@ import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
 import { MakerDMG } from '@electron-forge/maker-dmg';
 import { MakerWix } from '@electron-forge/maker-wix';
+import { MakerSnap } from '@electron-forge/maker-snap';
 import { VitePlugin } from '@electron-forge/plugin-vite';
-// import {copy} from 'fs-extra';
 import path from 'path';
+
 
 const config: ForgeConfig = {
   packagerConfig: {
-    icon: path.join(__dirname, 'app_assets/icon') // no file extension required
+    icon: path.join(__dirname, 'app_assets/icon'), // no file extension required
+    appBundleId: 'me.codepraycode.consonant',
+    appCategoryType:'Utility',
   },
   rebuildConfig: {},
   makers: [
@@ -27,7 +32,8 @@ const config: ForgeConfig = {
         options: {
           maintainer: 'codepraycode',
           homepage: 'https://github.com/codepraycode',
-          icon: path.join(__dirname, 'app_assets', 'icon.png')
+          icon: path.join(__dirname, 'app_assets', 'icon.png'),
+          // copyright: 'Copyright © Your Name 2023',
         }
     }),
     new MakerDMG({
@@ -36,16 +42,24 @@ const config: ForgeConfig = {
     new MakerWix({
       icon: path.join(__dirname, 'app_assets', 'icon.ico')
     }),
-    // {
-    //   name: '@electron-forge/maker-deb',
-    //   config: {
-    //     options: {
-    //       maintainer: 'codepraycode',
-    //       homepage: 'https://github.com/codepraycode',
-    //       icon: path.join(__dirname, 'app_assets', 'icon.png')
-    //     }
-    //   }
-    // }
+    new MakerSnap({
+    name: "Consonant toolkit",
+    version: "1.0.5",
+    summary:"A utility application to manage Consonant",
+    description: `
+    This is a utility application to manange Consonant.
+
+    Visit Consonant: https://consonant.codepraycode.me/
+    `,
+
+    confinement: 'strict',
+    // base: "core18",
+    grade: 'stable',    
+
+    // icon: path.join(__dirname, 'app_assets', 'icon.png'),
+    // issues: 'https://github.com/codepraycode/consonant-toolkit/issues',
+    // website: 'https://consonant.codepraycode.me',
+}),
   ],
   plugins: [
     new VitePlugin({
@@ -76,9 +90,10 @@ const config: ForgeConfig = {
       config: {
         repository: {
           owner: 'codepraycode',
-          name: 'consonant-toolkit'
+          name: 'consonant-toolkit',
         },
-        prerelease: true
+        authToken: process.env.GITHUB_TOKEN,
+        // prerelease: true
       }
     }
   ]
