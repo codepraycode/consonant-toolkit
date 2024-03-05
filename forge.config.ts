@@ -7,7 +7,7 @@ import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
 import { MakerDMG } from '@electron-forge/maker-dmg';
 import { MakerWix } from '@electron-forge/maker-wix';
-import { MakerSnap } from '@electron-forge/maker-snap';
+// import { MakerSnap } from '@electron-forge/maker-snap';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import path from 'path';
 
@@ -50,24 +50,24 @@ const config: ForgeConfig = {
       Visit Consonant: https://consonant.codepraycode.me/
       `,
     }),
-    new MakerSnap({
-      name: "Consonant toolkit",
-      version: "1.0.5",
-      summary:"A utility application to manage Consonant",
-      description: `
-      This is a utility application to manange Consonant.
+    // new MakerSnap({
+    //   name: "Consonant toolkit",
+    //   version: "1.0.5",
+    //   summary:"A utility application to manage Consonant",
+    //   description: `
+    //   This is a utility application to manange Consonant.
 
-      Visit Consonant: https://consonant.codepraycode.me/
-      `,
+    //   Visit Consonant: https://consonant.codepraycode.me/
+    //   `,
 
-      confinement: 'strict',
-      // base: "core18",
-      grade: 'stable',    
+    //   confinement: 'strict',
+    //   // base: "core18",
+    //   grade: 'stable',    
 
-      // icon: path.join(__dirname, 'app_assets', 'icon.png'),
-      // issues: 'https://github.com/codepraycode/consonant-toolkit/issues',
-      // website: 'https://consonant.codepraycode.me',
-    }),
+    //   // icon: path.join(__dirname, 'app_assets', 'icon.png'),
+    //   // issues: 'https://github.com/codepraycode/consonant-toolkit/issues',
+    //   // website: 'https://consonant.codepraycode.me',
+    // }),
   ],
   plugins: [
     new VitePlugin({
