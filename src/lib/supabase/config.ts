@@ -1,14 +1,16 @@
 import { SupabaseClient, createClient } from "@supabase/supabase-js";
+import { DEFAULT_SUPERBASE_URL, DEFAULT_SUPERBASE_API_KEY } from '../../env.config.json'
 
-
-const { SUPERBASE_URL, SUPERBASE_API_KEY } =  process.env;
+let { SUPERBASE_URL, SUPERBASE_API_KEY } =  process.env;
 
 if (!SUPERBASE_URL) {
-    throw new Error("SUPABASE_URL not provided")
+    console.warn("SUPABASE_URL not provided")
+    SUPERBASE_URL = DEFAULT_SUPERBASE_URL;
 }
 
 if (!SUPERBASE_API_KEY) {
-    throw new Error("SUPERBASE_API_KEY not provided")
+    console.warn("SUPERBASE_API_KEY not provided")
+    SUPERBASE_API_KEY = DEFAULT_SUPERBASE_API_KEY
 }
 
 const supabase = ((): SupabaseClient =>{

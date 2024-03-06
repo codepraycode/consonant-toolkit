@@ -94,3 +94,4 @@ out/
 test.ts
 yarn.lock
 package-lock.json
+env.config.json
