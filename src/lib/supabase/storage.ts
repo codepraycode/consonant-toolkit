@@ -6,8 +6,6 @@ import { StorageAccessConfig, StorageUploadConfig,
 import { handleStorageResponse } from './handlers';
 
 
-
-
 const storage = config.bucketName;
 
 
