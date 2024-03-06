@@ -1,5 +1,5 @@
 import { SupabaseClient, createClient } from "@supabase/supabase-js";
-import { DEFAULT_SUPERBASE_URL, DEFAULT_SUPERBASE_API_KEY } from '../../env.config.json'
+import { DEFAULT_SUPERBASE_URL, DEFAULT_SUPERBASE_API_KEY } from '../../../env.config.json'
 
 let { SUPERBASE_URL, SUPERBASE_API_KEY } =  process.env;
 
